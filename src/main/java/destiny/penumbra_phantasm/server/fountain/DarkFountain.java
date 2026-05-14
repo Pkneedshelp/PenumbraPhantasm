@@ -919,7 +919,7 @@ public class DarkFountain {
 
             distance = awayVec.length();
             if (distance >= 4) {
-                return;
+                continue;
             }
 
             Vec3 directionVec = awayVec.scale(1.0 / distance);
