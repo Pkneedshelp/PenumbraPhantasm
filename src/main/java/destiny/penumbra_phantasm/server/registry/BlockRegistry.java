@@ -31,7 +31,6 @@ public class BlockRegistry {
     public static final BlockBehaviour.Properties DARK_MARBLE_PROPERTIES = BlockBehaviour.Properties.copy(Blocks.CALCITE).mapColor(MapColor.COLOR_GRAY).requiresCorrectToolForDrops();
     public static final BlockBehaviour.Properties UMBRASTONE_PROPERTIES = BlockBehaviour.Properties.copy(Blocks.STONE).mapColor(MapColor.COLOR_MAGENTA).requiresCorrectToolForDrops();
     public static final BlockBehaviour.Properties CLIFFROCK_PROPERTIES = BlockBehaviour.Properties.copy(Blocks.STONE).mapColor(MapColor.COLOR_LIGHT_GRAY).requiresCorrectToolForDrops().sound(SoundTypeRegistry.CLIFF);
-    public static final BlockBehaviour.Properties CLIFF_VOID_PROPERTIES = BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).strength(-1.0F, 3600000.0F).noLootTable().pushReaction(PushReaction.BLOCK).noOcclusion();
     public static final BlockBehaviour.Properties TENEBRALITH_PROPERTIES = BlockBehaviour.Properties.copy(Blocks.DEEPSLATE).mapColor(MapColor.COLOR_BLACK).requiresCorrectToolForDrops().sound(SoundType.DEEPSLATE);
     public static final BlockBehaviour.Properties ROSEGOLD_PROPERTIES = BlockBehaviour.Properties.copy(Blocks.GOLD_BLOCK).mapColor(MapColor.COLOR_YELLOW).requiresCorrectToolForDrops().sound(SoundType.METAL);
 
@@ -220,12 +219,12 @@ public class BlockRegistry {
     public static final RegistryObject<Block> COBBLED_SCARLET_MARBLE_PRESSURE_PLATE = registerBlock("cobbled_scarlet_marble_pressure_plate", () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.CALCITE).mapColor(MapColor.COLOR_RED).requiresCorrectToolForDrops().noCollission(), SCARLET_MARBLE_BLOCKSET));
 
     //Scarlet marble chess
-    public static final RegistryObject<Block> SCARLET_MARBLE_PAWN = registerBlock("scarlet_marble_pawn", () -> new ChessPawnBlock(SCARLET_PROPERTIES));
-    public static final RegistryObject<Block> SCARLET_MARBLE_ROOK = registerBlock("scarlet_marble_rook", () -> new ChessRookBlock(SCARLET_PROPERTIES));
-    public static final RegistryObject<Block> SCARLET_MARBLE_KNIGHT = registerBlock("scarlet_marble_knight", () -> new ChessKnightBlock(SCARLET_PROPERTIES));
-    public static final RegistryObject<Block> SCARLET_MARBLE_BISHOP = registerBlock("scarlet_marble_bishop", () -> new ChessBishopBlock(SCARLET_PROPERTIES));
-    public static final RegistryObject<Block> SCARLET_MARBLE_QUEEN = registerBlock("scarlet_marble_queen", () -> new ChessQueenBlock(SCARLET_PROPERTIES));
-    public static final RegistryObject<Block> SCARLET_MARBLE_KING = registerBlock("scarlet_marble_king", () -> new ChessKingBlock(SCARLET_PROPERTIES));
+    public static final RegistryObject<Block> SCARLET_MARBLE_PAWN = registerBlock("scarlet_marble_pawn", () -> new ChessPawnBlock(SCARLET_MARBLE_PROPERTIES));
+    public static final RegistryObject<Block> SCARLET_MARBLE_ROOK = registerBlock("scarlet_marble_rook", () -> new ChessRookBlock(SCARLET_MARBLE_PROPERTIES));
+    public static final RegistryObject<Block> SCARLET_MARBLE_KNIGHT = registerBlock("scarlet_marble_knight", () -> new ChessKnightBlock(SCARLET_MARBLE_PROPERTIES));
+    public static final RegistryObject<Block> SCARLET_MARBLE_BISHOP = registerBlock("scarlet_marble_bishop", () -> new ChessBishopBlock(SCARLET_MARBLE_PROPERTIES));
+    public static final RegistryObject<Block> SCARLET_MARBLE_QUEEN = registerBlock("scarlet_marble_queen", () -> new ChessQueenBlock(SCARLET_MARBLE_PROPERTIES));
+    public static final RegistryObject<Block> SCARLET_MARBLE_KING = registerBlock("scarlet_marble_king", () -> new ChessKingBlock(SCARLET_MARBLE_PROPERTIES));
 
 
 
@@ -405,8 +404,6 @@ public class BlockRegistry {
             () -> new DarknessBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_BLACK).strength(-1.0F, 3600000.0F).noLootTable().pushReaction(PushReaction.BLOCK)
                     .noOcclusion()));
-    public static final RegistryObject<Block> CLIFF_VOID = BLOCKS.register("cliff_void",
-            () -> new CliffVoidBlock(CLIFF_VOID_PROPERTIES));
 
     public static final RegistryObject<Block> GREAT_DOOR_SHAPE = BLOCKS.register("great_door_shape",
             () -> new GreatDoorShapeBlock(BlockBehaviour.Properties.of()

@@ -427,7 +427,7 @@ public class KnifeItem extends SwordItem {
         Optional<DarkFountainCapability.PersistentDarkWorldSite> matchedSite =
                 lightCap.findMatchingPersistentSite(level.getServer(), roomResult.getPositions(), typeId);
 
-        ServerLevel targetLevel = null;
+        ServerLevel targetLevel;
         if (matchedSite.isPresent()) {
             DarkFountainCapability.PersistentDarkWorldSite site = matchedSite.get();
             targetLevel = level.getServer().getLevel(site.dimensionKey);

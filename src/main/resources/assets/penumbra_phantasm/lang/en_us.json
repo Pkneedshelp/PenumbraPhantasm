@@ -281,6 +281,7 @@
   "block.penumbra_phantasm.scarlet_marble_ivory_ore": "Scarlet Marble Ivory Ore",
 
   "block.penumbra_phantasm.great_door_spawner": "Great Door Spawner",
+  "block.penumbra_phantasm.great_door_shape": "Great Door",
   "block.penumbra_phantasm.rosegold_pillar": "Rosegold Pillar",
   "block.penumbra_phantasm.chiseled_rosegold": "Chiseled Rosegold",
 
@@ -376,11 +377,11 @@
   "biome.penumbra_phantasm.field_of_hopes_and_dreams": "Field of Hopes and Dreams",
   "biome.penumbra_phantasm.field_of_hopes_and_dreams.description": "'Where dream and shadow meet...'",
   "biome.penumbra_phantasm.great_board": "Great Board",
-  "biome.penumbra_phantasm.great_board.description": "'The board of grand moves'",
+  "biome.penumbra_phantasm.great_board.description": "'Every step is a move in the grand game'",
   "biome.penumbra_phantasm.scarlet_forest": "Scarlet Forest",
   "biome.penumbra_phantasm.scarlet_forest.description": "'The forest of eternal autumn'",
   "biome.penumbra_phantasm.cliffs": "??????",
-  "biome.penumbra_phantasm.cliffs.description": "'In this land, only eyes blinded by darkness can see the way...'",
+  "biome.penumbra_phantasm.cliffs.description": "'Only eyes blinded by darkness can see the way...'",
 
   "message.penumbra_phantasm.making_fountain_invalid_position": "Must be standing on a full block",
   "message.penumbra_phantasm.making_fountain_not_enough_key_blocks": "Not enough blocks to power your imagination...",

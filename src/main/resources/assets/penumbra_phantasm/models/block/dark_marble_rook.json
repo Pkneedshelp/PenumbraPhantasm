@@ -5,6 +5,6 @@
 	"render_type": "minecraft:cutout",
 	"textures": {
 		"0": "penumbra_phantasm:block/dark_marble_rook",
-		"particle": "penumbra_phantasm:block/dark_marble_rook"
+		"particle": "penumbra_phantasm:block/polished_dark_marble"
 	}
 }

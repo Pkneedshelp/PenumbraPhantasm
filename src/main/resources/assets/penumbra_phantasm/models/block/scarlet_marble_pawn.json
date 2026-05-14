@@ -5,6 +5,6 @@
 	"render_type": "minecraft:cutout",
 	"textures": {
 		"0": "penumbra_phantasm:block/scarlet_marble_pawn",
-		"particle": "penumbra_phantasm:block/scarlet_marble_pawn"
+		"particle": "penumbra_phantasm:block/polished_scarlet_marble"
 	}
 }
