@@ -426,7 +426,7 @@ public class DarkWorldRecipeBookComponent extends RecipeBookComponent implements
                 this.checkSearchStringUpdate();
                 return true;
             } else {
-                return super.charTyped(pCodePoint, pModifiers);
+                return false;
             }
         } else {
             return false;
