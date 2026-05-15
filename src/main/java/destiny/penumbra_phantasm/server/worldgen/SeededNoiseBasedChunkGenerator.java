@@ -32,10 +32,7 @@ import org.apache.commons.lang3.mutable.MutableObject;
 
 import javax.annotation.Nullable;
 import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.List;
-import java.util.OptionalInt;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.function.Predicate;
@@ -57,7 +54,6 @@ public class SeededNoiseBasedChunkGenerator extends NoiseBasedChunkGenerator {
                    generator.biomeSource), NoiseGeneratorSettings.CODEC.fieldOf("settings").forGetter((generator) ->
                    generator.settings), Codec.LONG.optionalFieldOf("seed", 0L).forGetter((generator) ->
                    generator.seed)).apply(instance, instance.stable(SeededNoiseBasedChunkGenerator::new)));
-   private static final BlockState AIR = Blocks.AIR.defaultBlockState();
    private final Holder<NoiseGeneratorSettings> settings;
    private final Supplier<Aquifer.FluidPicker> globalFluidPicker;
    private RandomState customState = null;
@@ -358,7 +354,7 @@ public class SeededNoiseBasedChunkGenerator extends NoiseBasedChunkGenerator {
                            blockstate = this.greatBoardStratumState(l3, l2, k4);
                         }
 
-                        if (blockstate != AIR && !SharedConstants.debugVoidTerrain(pChunk.getPos())) {
+                        if (blockstate != Blocks.AIR.defaultBlockState() && !SharedConstants.debugVoidTerrain(pChunk.getPos())) {
                            levelchunksection.setBlockState(i4, i3, l4, blockstate, false);
                            heightmap.update(i4, l2, l4, blockstate);
                            heightmap1.update(i4, l2, l4, blockstate);
@@ -377,6 +373,7 @@ public class SeededNoiseBasedChunkGenerator extends NoiseBasedChunkGenerator {
       }
 
       noisechunk.stopInterpolation();
+
       return pChunk;
    }
 
@@ -385,22 +382,30 @@ public class SeededNoiseBasedChunkGenerator extends NoiseBasedChunkGenerator {
       int minX = chunkPos.getMinBlockX();
       int minZ = chunkPos.getMinBlockZ();
       BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos();
+
       for (int lx = 0; lx < 16; ++lx) {
          for (int lz = 0; lz < 16; ++lz) {
             int wx = minX + lx;
             int wz = minZ + lz;
             int y = chunk.getHeight(Heightmap.Types.WORLD_SURFACE_WG, lx, lz);
+
             blockPos.set(wx, y, wz);
             Holder<Biome> biome = chunk.getNoiseBiome(QuartPos.fromBlock(wx), QuartPos.fromBlock(y), QuartPos.fromBlock(wz));
+
             if (!biome.is(GREAT_BOARD)) {
                continue;
             }
+
             BlockState current = chunk.getBlockState(blockPos);
+
             if (!current.is(BlockRegistry.DARK_MARBLE.get()) && !current.is(BlockRegistry.SCARLET_MARBLE.get())) {
                continue;
             }
+
             boolean darkSquare = (Mth.floorDiv(wx, 3) + Mth.floorDiv(wz, 3)) % 2 == 0;
+
             BlockState polished = darkSquare ? BlockRegistry.POLISHED_DARK_MARBLE.get().defaultBlockState() : BlockRegistry.POLISHED_SCARLET_MARBLE.get().defaultBlockState();
+
             chunk.setBlockState(blockPos, polished, false);
          }
       }
@@ -415,6 +420,18 @@ public class SeededNoiseBasedChunkGenerator extends NoiseBasedChunkGenerator {
    private BlockState greatBoardStratumState(int x, int y, int z) {
       int warpedY = y + Mth.floor(this.greatBoardLayerWarp(x, z));
       int band = Mth.floorDiv(warpedY, GREAT_BOARD_BAND_HEIGHT);
+      Random random = new Random();
+
+      if (y == getMinY()) {
+         return Blocks.BEDROCK.defaultBlockState();
+      }
+
+      if (y <= getMinY() + 4) {
+         if (random.nextBoolean()) {
+            return Blocks.BEDROCK.defaultBlockState();
+         }
+      }
+
       return (band & 1) == 0 ? BlockRegistry.DARK_MARBLE.get().defaultBlockState() : BlockRegistry.SCARLET_MARBLE.get().defaultBlockState();
    }
 
@@ -507,13 +524,11 @@ public class SeededNoiseBasedChunkGenerator extends NoiseBasedChunkGenerator {
 
    private BlockState cliffsStateForColumn(CliffsColumnProfile profile, int y) {
       if (!profile.hasMass() || y > profile.topY()) {
-         return AIR;
+         return Blocks.AIR.defaultBlockState();
       }
       for (int i = 0; i < profile.layerCount(); ++i) {
          if (profile.layerStarts()[i] == y) {
-            return i == 0
-                    ? BlockRegistry.CLIFFROCK.get().defaultBlockState()
-                    : BlockRegistry.COBBLED_CLIFFROCK.get().defaultBlockState();
+            return i == 0 ? BlockRegistry.CLIFFROCK.get().defaultBlockState() : BlockRegistry.COBBLED_CLIFFROCK.get().defaultBlockState();
          }
       }
       return BlockRegistry.CLIFFROCK.get().defaultBlockState();
