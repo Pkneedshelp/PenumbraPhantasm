@@ -58,11 +58,19 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.UMBRASTONE_HOE.get());
 
                 output.accept(ItemRegistry.IVORY_SWORD.get());
-                output.accept(ItemRegistry.IVORY.get());
-
-                output.accept(ItemRegistry.DARK_CANDY_STICK.get());
+                output.accept(ItemRegistry.IVORY_AXE.get());
+                output.accept(ItemRegistry.IVORY_PICKAXE.get());
+                output.accept(ItemRegistry.IVORY_SHOVEL.get());
+                output.accept(ItemRegistry.IVORY_HOE.get());
 
                 output.accept(ItemRegistry.ROSEGOLD_SWORD.get());
+                output.accept(ItemRegistry.ROSEGOLD_AXE.get());
+                output.accept(ItemRegistry.ROSEGOLD_PICKAXE.get());
+                output.accept(ItemRegistry.ROSEGOLD_SHOVEL.get());
+                output.accept(ItemRegistry.ROSEGOLD_HOE.get());
+
+                output.accept(ItemRegistry.DARK_CANDY_STICK.get());
+                output.accept(ItemRegistry.IVORY.get());
                 output.accept(ItemRegistry.RAW_ROSEGOLD.get());
                 output.accept(ItemRegistry.ROSEGOLD_INGOT.get());
 

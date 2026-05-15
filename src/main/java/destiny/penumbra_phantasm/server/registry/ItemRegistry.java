@@ -64,7 +64,7 @@ public class ItemRegistry {
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> DARk_CANDY_SWORD = ITEMS.register("dark_candy_sword",
-            () -> new PickaxeItem(Tiers.WOOD, 0, 0, new Item.Properties()));
+            () -> new SwordItem(Tiers.WOOD, 0, 0, new Item.Properties()));
     public static final RegistryObject<Item> DARk_CANDY_AXE = ITEMS.register("dark_candy_axe",
             () -> new AxeItem(Tiers.WOOD, 0, 0, new Item.Properties()));
     public static final RegistryObject<Item> DARk_CANDY_PICKAXE = ITEMS.register("dark_candy_pickaxe",
@@ -75,7 +75,7 @@ public class ItemRegistry {
             () -> new HoeItem(Tiers.WOOD, 0, 0, new Item.Properties()));
 
     public static final RegistryObject<Item> UMBRASTONE_SWORD = ITEMS.register("umbrastone_sword",
-            () -> new PickaxeItem(Tiers.STONE, 0, 0, new Item.Properties()));
+            () -> new SwordItem(Tiers.STONE, 0, 0, new Item.Properties()));
     public static final RegistryObject<Item> UMBRASTONE_AXE = ITEMS.register("umbrastone_axe",
             () -> new AxeItem(Tiers.STONE, 0, 0, new Item.Properties()));
     public static final RegistryObject<Item> UMBRASTONE_PICKAXE = ITEMS.register("umbrastone_pickaxe",
@@ -86,10 +86,27 @@ public class ItemRegistry {
             () -> new HoeItem(Tiers.STONE, 0, 0, new Item.Properties()));
 
     public static final RegistryObject<Item> IVORY_SWORD = ITEMS.register("ivory_sword",
+            () -> new SwordItem(Tiers.IRON, 0, 0, new Item.Properties()));
+    public static final RegistryObject<Item> IVORY_AXE = ITEMS.register("ivory_axe",
+            () -> new AxeItem(Tiers.IRON, 0, 0, new Item.Properties()));
+    public static final RegistryObject<Item> IVORY_PICKAXE = ITEMS.register("ivory_pickaxe",
             () -> new PickaxeItem(Tiers.IRON, 0, 0, new Item.Properties()));
+    public static final RegistryObject<Item> IVORY_SHOVEL = ITEMS.register("ivory_shovel",
+            () -> new ShovelItem(Tiers.IRON, 0, 0, new Item.Properties()));
+    public static final RegistryObject<Item> IVORY_HOE = ITEMS.register("ivory_hoe",
+            () -> new HoeItem(Tiers.IRON, 0, 0, new Item.Properties()));
+
 
     public static final RegistryObject<Item> ROSEGOLD_SWORD = ITEMS.register("rosegold_sword",
-            () -> new PickaxeItem(Tiers.IRON, 0, 0, new Item.Properties()));
+            () -> new SwordItem(Tiers.DIAMOND, 0, 0, new Item.Properties()));
+    public static final RegistryObject<Item> ROSEGOLD_AXE = ITEMS.register("rosegold_axe",
+            () -> new AxeItem(Tiers.DIAMOND, 0, 0, new Item.Properties()));
+    public static final RegistryObject<Item> ROSEGOLD_PICKAXE = ITEMS.register("rosegold_pickaxe",
+            () -> new PickaxeItem(Tiers.DIAMOND, 0, 0, new Item.Properties()));
+    public static final RegistryObject<Item> ROSEGOLD_SHOVEL = ITEMS.register("rosegold_shovel",
+            () -> new ShovelItem(Tiers.DIAMOND, 0, 0, new Item.Properties()));
+    public static final RegistryObject<Item> ROSEGOLD_HOE = ITEMS.register("rosegold_hoe",
+            () -> new HoeItem(Tiers.DIAMOND, 0, 0, new Item.Properties()));
 
     public static final RegistryObject<Item> DARK_CANDY_BUCKET = ITEMS.register("dark_candy_bucket",
             () -> new ScarletBucketItem(Fluids.EMPTY, new Item.Properties()));

@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "penumbra_phantasm:black_shard",
+
+    "penumbra_phantasm:dark_candy_sword",
+    "penumbra_phantasm:umbrastone_sword",
+    "penumbra_phantasm:ivory_sword",
+    "penumbra_phantasm:rosegold_sword"
+  ]
+}
