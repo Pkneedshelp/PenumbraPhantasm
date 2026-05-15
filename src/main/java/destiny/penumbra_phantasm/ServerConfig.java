@@ -48,7 +48,7 @@ public class ServerConfig {
             .defineInRange("great_door_place_max_radius", 1024, 64, 1048576);
 
     private static final ForgeConfigSpec.BooleanValue SKIP_INTRO_SCREEN = BUILDER
-            .comment("If true, skip the intro screen on first login and assign a random soul type")
+            .comment("Should the intro screen on first login be skipped and a random soul type be assigned")
             .comment("Default: false")
             .define("skip_intro_screen", false);
 
