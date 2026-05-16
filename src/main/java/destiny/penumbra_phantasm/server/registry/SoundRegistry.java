@@ -45,7 +45,7 @@ public class SoundRegistry {
 
     public static RegistryObject<SoundEvent> GREAT_DOOR = registerSoundEvent("great_door");
 
-    public static RegistryObject<SoundEvent> AMBIENCE_WIND = registerSoundEvent("ambience_wind");
+    public static RegistryObject<SoundEvent> DICE_THROW = registerSoundEvent("dice_throw");
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String sound)
     {

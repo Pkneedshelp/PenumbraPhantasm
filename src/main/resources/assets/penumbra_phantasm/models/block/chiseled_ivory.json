@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "penumbra_phantasm:block/chiseled_ivory_3",
+    "east": "penumbra_phantasm:block/chiseled_ivory_2",
+    "north": "penumbra_phantasm:block/chiseled_ivory_1",
+    "particle": "penumbra_phantasm:block/chiseled_ivory_6",
+    "south": "penumbra_phantasm:block/chiseled_ivory_6",
+    "up": "penumbra_phantasm:block/chiseled_ivory_4",
+    "west": "penumbra_phantasm:block/chiseled_ivory_5"
+  }
+}

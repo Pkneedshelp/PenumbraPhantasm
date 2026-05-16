@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "C": {
+      "item": "penumbra_phantasm:chiseled_ivory"
+    },
+    "S": {
+      "item": "penumbra_phantasm:scarlet_marble"
+    },
+    "D": {
+      "item": "penumbra_phantasm:dark_marble"
+    }
+  },
+  "pattern": [
+    " D ",
+    "SCS",
+    " D "
+  ],
+  "result": {
+    "count": 1,
+    "item": "penumbra_phantasm:dark_marble_dice"
+  },
+  "show_notification": true
+}

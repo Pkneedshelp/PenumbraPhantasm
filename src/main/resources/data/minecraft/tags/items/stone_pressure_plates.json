@@ -22,6 +22,8 @@
     "penumbra_phantasm:cobbled_tenebralith_pressure_plate",
     "penumbra_phantasm:tenebralith_brick_pressure_plate",
     "penumbra_phantasm:rosegold_brick_pressure_plate",
-    "penumbra_phantasm:rosegold_pressure_plate"
+    "penumbra_phantasm:rosegold_pressure_plate",
+    "penumbra_phantasm:ivory_pressure_plate",
+    "penumbra_phantasm:ivory_brick_pressure_plate"
   ]
 }

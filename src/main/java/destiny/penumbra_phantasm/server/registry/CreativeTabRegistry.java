@@ -287,6 +287,26 @@ public class CreativeTabRegistry {
                 output.accept(BlockRegistry.COBBLED_CLIFFROCK_BUTTON.get());
                 output.accept(BlockRegistry.COBBLED_CLIFFROCK_PRESSURE_PLATE.get());
 
+                output.accept(BlockRegistry.IVORY_PILLAR.get());
+                output.accept(BlockRegistry.CHISELED_IVORY.get());
+
+                output.accept(BlockRegistry.DARK_MARBLE_DICE.get());
+                output.accept(BlockRegistry.SCARLET_MARBLE_DICE.get());
+
+                output.accept(BlockRegistry.IVORY_BLOCK.get());
+                output.accept(BlockRegistry.IVORY_STAIRS.get());
+                output.accept(BlockRegistry.IVORY_SLAB.get());
+                output.accept(BlockRegistry.IVORY_WALL.get());
+                output.accept(BlockRegistry.IVORY_BUTTON.get());
+                output.accept(BlockRegistry.IVORY_PRESSURE_PLATE.get());
+
+                output.accept(BlockRegistry.IVORY_BRICKS.get());
+                output.accept(BlockRegistry.IVORY_BRICK_STAIRS.get());
+                output.accept(BlockRegistry.IVORY_BRICK_SLAB.get());
+                output.accept(BlockRegistry.IVORY_BRICK_WALL.get());
+                output.accept(BlockRegistry.IVORY_BRICK_BUTTON.get());
+                output.accept(BlockRegistry.IVORY_BRICK_PRESSURE_PLATE.get());
+
                 output.accept(BlockRegistry.ROSEGOLD_PILLAR.get());
 
                 output.accept(BlockRegistry.ROSEGOLD_BLOCK.get());

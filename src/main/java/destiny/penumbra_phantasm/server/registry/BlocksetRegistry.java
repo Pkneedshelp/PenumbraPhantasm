@@ -245,6 +245,16 @@ public final class BlocksetRegistry {
                     false,
                     false,
                     false
+            ),
+            new BricksBlockset(
+                    "ivory_bricks",
+                    "ivory_bricks",
+                    "ivory/bricks",
+                    "",
+                    1,
+                    false,
+                    false,
+                    false
             )
     );
 

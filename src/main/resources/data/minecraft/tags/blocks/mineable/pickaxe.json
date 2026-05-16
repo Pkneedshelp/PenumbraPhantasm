@@ -169,6 +169,20 @@
     "penumbra_phantasm:cliffrock_eye",
     "penumbra_phantasm:weeping_eye",
     "penumbra_phantasm:leaking_ichor",
-    "penumbra_phantasm:ichor_lantern"
+    "penumbra_phantasm:ichor_lantern",
+    "penumbra_phantasm:ivory_block",
+    "penumbra_phantasm:ivory_stairs",
+    "penumbra_phantasm:ivory_slab",
+    "penumbra_phantasm:ivory_wall",
+    "penumbra_phantasm:ivory_button",
+    "penumbra_phantasm:ivory_pressure_plate",
+    "penumbra_phantasm:ivory_bricks",
+    "penumbra_phantasm:ivory_brick_stairs",
+    "penumbra_phantasm:ivory_brick_slab",
+    "penumbra_phantasm:ivory_brick_wall",
+    "penumbra_phantasm:ivory_brick_button",
+    "penumbra_phantasm:ivory_brick_pressure_plate",
+    "penumbra_phantasm:dark_marble_dice",
+    "penumbra_phantasm:scarlet_marble_dice"
   ]
 }

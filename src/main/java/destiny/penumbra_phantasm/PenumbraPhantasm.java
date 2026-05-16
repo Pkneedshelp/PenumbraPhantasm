@@ -1,6 +1,8 @@
 package destiny.penumbra_phantasm;
 
 import destiny.penumbra_phantasm.client.ClientConfig;
+import destiny.penumbra_phantasm.client.render.blockentity.DarkMarbleDiceBlockEntityRenderer;
+import destiny.penumbra_phantasm.client.render.blockentity.ScarletMarbleDiceBlockEntityRenderer;
 import destiny.penumbra_phantasm.client.render.entity.SealingSoulEntityRenderer;
 import destiny.penumbra_phantasm.client.render.model.*;
 import destiny.penumbra_phantasm.client.render.model.great_door.GreatDoorBacksideModel;
@@ -170,6 +172,12 @@ public class PenumbraPhantasm {
             event.registerSpriteSet(ParticleTypeRegistry.REAL_KNIFE_HIT.get(), RealKnifeHitParticle.Provider::new);
             event.registerSpriteSet(ParticleTypeRegistry.FOUNTAIN_DARKNESS.get(), FountainDarknessParticle.Provider::new);
             event.registerSpriteSet(ParticleTypeRegistry.LUMINESCENT_PARTICLE.get(), LuminescentParticle.Provider::new);
+        }
+
+        @SubscribeEvent
+        public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerBlockEntityRenderer(BlockEntityRegistry.DARK_MARBLE_DICE_BLOCK_ENTITY.get(), DarkMarbleDiceBlockEntityRenderer::new);
+            event.registerBlockEntityRenderer(BlockEntityRegistry.SCARLET_MARBLE_DICE_BLOCK_ENTITY.get(), ScarletMarbleDiceBlockEntityRenderer::new);
         }
     }
 }

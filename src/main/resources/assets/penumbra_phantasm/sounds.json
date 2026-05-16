@@ -209,10 +209,12 @@
       "penumbra_phantasm:great_door"
     ]
   },
-  "ambience_wind": {
+  "dice_throw": {
     "sounds":
     [
-      "penumbra_phantasm:ambience_wind"
+      "penumbra_phantasm:dice_throw_1",
+      "penumbra_phantasm:dice_throw_2",
+      "penumbra_phantasm:dice_throw_3"
     ]
   }
 }

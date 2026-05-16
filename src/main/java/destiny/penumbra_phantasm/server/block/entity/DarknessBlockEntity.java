@@ -126,8 +126,10 @@ public class DarknessBlockEntity extends BlockEntity {
 
     @Override
     public void load(@NotNull CompoundTag tag) {
-        super.load(tag);
-        this.fountainPos = NbtUtils.readBlockPos(tag.getCompound(FOUNTAIN_POS));
+        if (tag != null) {
+            super.load(tag);
+            this.fountainPos = NbtUtils.readBlockPos(tag.getCompound(FOUNTAIN_POS));
+        }
     }
 
     @Override
@@ -150,7 +152,10 @@ public class DarknessBlockEntity extends BlockEntity {
 
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        load(pkt.getTag());
+        CompoundTag tag = pkt.getTag();
+        if (tag != null) {
+            load(tag);
+        }
     }
 
     private void markUpdated() {

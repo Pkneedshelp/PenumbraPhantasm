@@ -24,6 +24,8 @@
     "penumbra_phantasm:cobbled_tenebralith_button",
     "penumbra_phantasm:tenebralith_brick_button",
     "penumbra_phantasm:rosegold_brick_button",
-    "penumbra_phantasm:rosegold_button"
+    "penumbra_phantasm:rosegold_button",
+    "penumbra_phantasm:ivory_button",
+    "penumbra_phantasm:ivory_brick_button"
   ]
 }

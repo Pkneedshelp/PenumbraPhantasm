@@ -1,0 +1,12 @@
+{
+  "parent": "penumbra_phantasm:block/template_cube_emissive",
+  "textures": {
+    "down": "penumbra_phantasm:block/scarlet_marble_dice_3",
+    "east": "penumbra_phantasm:block/scarlet_marble_dice_2",
+    "north": "penumbra_phantasm:block/scarlet_marble_dice_1",
+    "particle": "penumbra_phantasm:block/scarlet_marble_dice_6",
+    "south": "penumbra_phantasm:block/scarlet_marble_dice_6",
+    "up": "penumbra_phantasm:block/scarlet_marble_dice_4",
+    "west": "penumbra_phantasm:block/scarlet_marble_dice_5"
+  }
+}

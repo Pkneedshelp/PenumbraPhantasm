@@ -402,6 +402,9 @@ public class BlockRegistry {
     public static final RegistryObject<Block> IVORY_PILLAR = registerBlock("ivory_pillar", () -> new RotatedPillarBlock(IVORY_PROPERTIES));
     public static final RegistryObject<Block> CHISELED_IVORY = registerBlock("chiseled_ivory", () -> new Block(IVORY_PROPERTIES));
 
+    public static final RegistryObject<Block> DARK_MARBLE_DICE = registerBlock("dark_marble_dice", () -> new DarkMarbleDiceBlock(DARK_MARBLE_PROPERTIES));
+    public static final RegistryObject<Block> SCARLET_MARBLE_DICE = registerBlock("scarlet_marble_dice", () -> new ScarletMarbleDiceBlock(SCARLET_MARBLE_PROPERTIES));
+
     //Ivory
     public static final RegistryObject<Block> IVORY_BLOCK = registerBlock("ivory_block", () -> new Block(IVORY_PROPERTIES));
     public static final RegistryObject<Block> IVORY_STAIRS = registerBlock("ivory_stairs", () -> new StairBlock(BlockRegistry.IVORY_BLOCK.get().defaultBlockState(), IVORY_PROPERTIES));
