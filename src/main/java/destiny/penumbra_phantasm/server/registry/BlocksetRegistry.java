@@ -7,7 +7,6 @@ import destiny.penumbra_phantasm.server.datagen.WoodBlockset;
 import java.util.List;
 
 public final class BlocksetRegistry {
-
     public static final List<StoneBlockset> STONE_BLOCKSETS = List.of(
             new StoneBlockset(
                     "polished_umbrastone",
@@ -168,6 +167,16 @@ public final class BlocksetRegistry {
                     "rosegold",
                     "rosegold",
                     "rosegold",
+                    "",
+                    1,
+                    false,
+                    false,
+                    false
+            ),
+            new StoneBlockset(
+                    "ivory",
+                    "ivory",
+                    "ivory",
                     "",
                     1,
                     false,
