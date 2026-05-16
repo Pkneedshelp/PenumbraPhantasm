@@ -398,10 +398,10 @@ public class DarkFountain {
                         }
                     }
                 }
+                lightFountainCapability.removeDarkFountain(lightLevel, lightFountain.fountainPos);
             }
 
             darkFountainCapability.removeDarkFountain(level, fountainPos);
-            lightFountainCapability.removeDarkFountain(lightLevel, destinationPos);
 
             if (level instanceof ServerLevel serverLevel) {
                 ChunkPos soulChunk = new ChunkPos(this.fountainPos);
@@ -843,7 +843,7 @@ public class DarkFountain {
                     if (greatDoor == null) {
                         continue;
                     }
-                    Vec3 spawn = GreatDoor.spawnCenterInFrontOfGreatDoor(greatDoor.greatDoorPos, greatDoor.direction);
+                    Vec3 spawn = GreatDoor.spawnCenterInFrontOfGreatDoor(destinationLevel, greatDoor.greatDoorPos, greatDoor.direction);
                     float yaw = greatDoor.direction.toYRot();
                     this.teleportedEntities.add(player.getUUID());
                     level.removePlayerImmediately(player, Entity.RemovalReason.CHANGED_DIMENSION);

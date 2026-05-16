@@ -24,6 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.PacketDistributor;
@@ -364,7 +365,7 @@ public class GreatDoor {
             peer.maintainDoorShape(destinationLevel);
 
             float yaw = peer.direction.toYRot();
-            Vec3 destVec = spawnCenterInFrontOfGreatDoor(peer.greatDoorPos, peer.direction);
+            Vec3 destVec = spawnCenterInFrontOfGreatDoor(destinationLevel, peer.greatDoorPos, peer.direction);
 
             for (ServerPlayer serverPlayer : greatDoorLevel.getEntitiesOfClass(ServerPlayer.class, volumeBox)) {
                 if (serverPlayer.isSpectator()) {
@@ -443,9 +444,10 @@ public class GreatDoor {
         });
     }
 
-    public static Vec3 spawnCenterInFrontOfGreatDoor(BlockPos greatDoorPos, Direction doorFacing) {
-        return Vec3.atBottomCenterOf(greatDoorPos.relative(doorFacing, 1))
-                .add(Vec3.atLowerCornerOf(BlockPos.ZERO.relative(doorFacing.getClockWise(), 1)).scale(2.5));
+    public static Vec3 spawnCenterInFrontOfGreatDoor(Level level, BlockPos greatDoorPos, Direction doorFacing) {
+        BlockPos heightmappedPos = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, greatDoorPos.relative(doorFacing, 2));
+
+        return heightmappedPos.getCenter().add(Vec3.atLowerCornerOf(BlockPos.ZERO.relative(doorFacing.getClockWise(), 1)).scale(2.5).add(0, 0.5, 0));
     }
 
     public void broadcastSync(ServerLevel darkLevel) {
