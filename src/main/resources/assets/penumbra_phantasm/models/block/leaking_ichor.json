@@ -1,0 +1,23 @@
+{
+  "parent": "minecraft:block/cube",
+  "loader": "fusion:model",
+  "type": "connecting",
+  "textures": {
+    "down": "penumbra_phantasm:block/cliffrock_1",
+    "east": "penumbra_phantasm:block/cliffrock_1",
+    "north": "penumbra_phantasm:block/leaking_ichor",
+    "particle": "penumbra_phantasm:block/leaking_ichor",
+    "south": "penumbra_phantasm:block/cliffrock_1",
+    "up": "penumbra_phantasm:block/cliffrock_1",
+    "west": "penumbra_phantasm:block/cliffrock_1"
+  },
+  "connections": [
+    {
+       "type": "is_same_block"
+    },
+    {
+       "type": "match_block",
+       "block": "penumbra_phantasm:weeping_eye"
+    }
+  ]
+}

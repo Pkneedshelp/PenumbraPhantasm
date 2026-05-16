@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "penumbra_phantasm:block/cliffrock_1",
+    "east": "penumbra_phantasm:block/cliffrock_1",
+    "north": "penumbra_phantasm:block/weeping_eye",
+    "particle": "penumbra_phantasm:block/weeping_eye",
+    "south": "penumbra_phantasm:block/cliffrock_1",
+    "up": "penumbra_phantasm:block/cliffrock_1",
+    "west": "penumbra_phantasm:block/cliffrock_1"
+  }
+}

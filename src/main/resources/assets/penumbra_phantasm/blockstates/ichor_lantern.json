@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "penumbra_phantasm:block/ichor_lantern"
+    },
+    "hanging=true": {
+      "model": "penumbra_phantasm:block/ichor_lantern_hanging"
+    }
+  }
+}

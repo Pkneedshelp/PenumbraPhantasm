@@ -5,6 +5,7 @@ import destiny.penumbra_phantasm.server.block.*;
 import destiny.penumbra_phantasm.server.worldgen.DarkCandyGrower;
 import destiny.penumbra_phantasm.server.worldgen.ScarletGrower;
 import destiny.penumbra_phantasm.server.block.TenebralithSpikeBlock;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
@@ -120,9 +121,9 @@ public class BlockRegistry {
     public static final RegistryObject<Block> SCARLET_LEAVES = registerBlock("scarlet_leaves",
             () -> new ScarletLeavesBlock(BlockBehaviour.Properties.copy(Blocks.AZALEA_LEAVES)
                     .mapColor(MapColor.COLOR_PINK).sound(SoundType.AZALEA_LEAVES)));
-    public static final RegistryObject<Block> FALLEN_SCARLET_LEAVES = registerBlock("fallen_scarlet_leaves",
+    public static final RegistryObject<Block> FALLEN_SCARLET_LEAVES = BLOCKS.register("fallen_scarlet_leaves",
             () -> new FallenLeafBlock(BlockBehaviour.Properties.copy(Blocks.PINK_PETALS)
-                    .mapColor(MapColor.COLOR_PINK).sound(SoundType.PINK_PETALS).noCollission().noOcclusion().instabreak()));
+                    .mapColor(MapColor.COLOR_PINK).sound(SoundType.PINK_PETALS).noCollission().noOcclusion().instabreak(), 1));
     public static final RegistryObject<Block> SCARLET_LOG = registerBlock("scarlet_log",
             () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_WOOD)
                     .mapColor(MapColor.COLOR_RED).sound(SoundType.CHERRY_WOOD)));
@@ -153,9 +154,9 @@ public class BlockRegistry {
     public static final RegistryObject<Block> DARK_CANDY_LEAVES = registerBlock("dark_candy_leaves",
             () -> new DarkCandyLeaves(BlockBehaviour.Properties.copy(Blocks.AZALEA_LEAVES)
                     .mapColor(MapColor.COLOR_PURPLE).sound(SoundType.AZALEA_LEAVES).randomTicks()));
-    public static final RegistryObject<Block> FALLEN_DARK_CANDY_LEAVES = registerBlock("fallen_dark_candy_leaves",
+    public static final RegistryObject<Block> FALLEN_DARK_CANDY_LEAVES = BLOCKS.register("fallen_dark_candy_leaves",
             () -> new FallenLeafBlock(BlockBehaviour.Properties.copy(Blocks.PINK_PETALS)
-                    .mapColor(MapColor.COLOR_PURPLE).sound(SoundType.PINK_PETALS).noCollission().noOcclusion().instabreak()));
+                    .mapColor(MapColor.COLOR_PURPLE).sound(SoundType.PINK_PETALS).noCollission().noOcclusion().instabreak(), 1f));
     public static final RegistryObject<Block> DARK_CANDY_LOG = registerBlock("dark_candy_log",
             () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_WOOD)
                     .mapColor(MapColor.COLOR_PURPLE).sound(SoundType.CHERRY_WOOD)));
@@ -279,6 +280,15 @@ public class BlockRegistry {
     public static final RegistryObject<Block> CLIFFROCK_SLIDE = registerBlock("cliffrock_slide", () -> new CliffrockSlideBlock(BlockBehaviour.Properties.copy(Blocks.STONE).mapColor(MapColor.COLOR_LIGHT_GRAY).requiresCorrectToolForDrops().sound(SoundTypeRegistry.CLIFF).noOcclusion()));
     public static final RegistryObject<Block> CLIFFROCK_PILLAR = registerBlock("cliffrock_pillar", () -> new RotatedPillarBlock(CLIFFROCK_PROPERTIES));
     public static final RegistryObject<Block> CHISELED_CLIFFROCK = registerBlock("chiseled_cliffrock", () -> new Block(CLIFFROCK_PROPERTIES));
+
+    public static final RegistryObject<Block> CLIFFROCK_EYE = registerBlock("cliffrock_eye", () -> new GenericOrientableBlock(CLIFFROCK_PROPERTIES));
+    public static final RegistryObject<Block> WEEPING_EYE = registerBlock("weeping_eye", () -> new WeepingEyeBlock(BlockBehaviour.Properties.copy(Blocks.STONE).mapColor(MapColor.COLOR_BLACK).requiresCorrectToolForDrops().sound(SoundType.HONEY_BLOCK).randomTicks()));
+    public static final RegistryObject<Block> LEAKING_ICHOR = registerBlock("leaking_ichor", () -> new LeakingIchorBlock(BlockBehaviour.Properties.copy(Blocks.STONE).mapColor(MapColor.COLOR_BLACK).requiresCorrectToolForDrops().sound(SoundType.HONEY_BLOCK)));
+    public static final RegistryObject<Block> ICHOR_PUDDLE = BLOCKS.register("ichor_puddle", () -> new ScalableHorizontalPlaneBlock(BlockBehaviour.Properties.copy(Blocks.STONE).mapColor(MapColor.COLOR_BLACK).requiresCorrectToolForDrops().sound(SoundType.HONEY_BLOCK).noOcclusion(), 2f));
+    public static final RegistryObject<Block> ICHOR_BLOCK = registerBlock("ichor_block", () -> new Block(BlockBehaviour.Properties.copy(Blocks.STONE).mapColor(MapColor.COLOR_BLACK).requiresCorrectToolForDrops().sound(SoundType.HONEY_BLOCK)));
+    public static final RegistryObject<Block> ICHOR_TORCH = BLOCKS.register("ichor_torch", () -> new TorchBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS).mapColor(MapColor.COLOR_CYAN).lightLevel(state -> 8), ParticleTypes.SOUL_FIRE_FLAME));
+    public static final RegistryObject<Block> ICHOR_WALL_TORCH = BLOCKS.register("ichor_wall_torch", () -> new WallTorchBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_PLANKS).mapColor(MapColor.COLOR_CYAN).lightLevel(state -> 8), ParticleTypes.SOUL_FIRE_FLAME));
+    public static final RegistryObject<Block> ICHOR_LANTERN = registerBlock("ichor_lantern", () -> new LanternBlock(BlockBehaviour.Properties.copy(Blocks.SOUL_LANTERN).mapColor(MapColor.COLOR_CYAN).lightLevel(state -> 12)));
 
     //Polished cliffrock
     public static final RegistryObject<Block> POLISHED_CLIFFROCK = registerBlock("polished_cliffrock", () -> new Block(CLIFFROCK_PROPERTIES));

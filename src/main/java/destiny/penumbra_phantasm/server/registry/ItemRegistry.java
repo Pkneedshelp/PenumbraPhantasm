@@ -2,6 +2,7 @@ package destiny.penumbra_phantasm.server.registry;
 
 import destiny.penumbra_phantasm.PenumbraPhantasm;
 import destiny.penumbra_phantasm.server.item.*;
+import net.minecraft.core.Direction;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.material.Fluids;
@@ -56,11 +57,13 @@ public class ItemRegistry {
 
     public static final RegistryObject<Item> DARK_CANDY_STICK = ITEMS.register("dark_candy_stick",
             () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> ICHOR = ITEMS.register("ichor",
+            () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> IVORY = ITEMS.register("ivory",
+            () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> RAW_ROSEGOLD = ITEMS.register("raw_rosegold",
             () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> ROSEGOLD_INGOT = ITEMS.register("rosegold_ingot",
-            () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> IVORY = ITEMS.register("ivory",
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> DARk_CANDY_SWORD = ITEMS.register("dark_candy_sword",
@@ -114,4 +117,13 @@ public class ItemRegistry {
             () -> new ScarletBucketItem(FluidRegistry.SOURCE_LUMINESCENT_WATER.get(), new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> PURE_DARKNESS_BUCKET = ITEMS.register("pure_darkness_bucket",
             () -> new ScarletBucketItem(FluidRegistry.SOURCE_PURE_DARKNESS.get(), new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> FALLEN_DARK_CANDY_LEAVES = ITEMS.register("fallen_dark_candy_leaves",
+            () -> new ScalableHorizontalPlaneBlockItem(BlockRegistry.FALLEN_DARK_CANDY_LEAVES.get(), new Item.Properties()));
+    public static final RegistryObject<Item> FALLEN_SCARLET_LEAVES = ITEMS.register("fallen_scarlet_leaves",
+            () -> new ScalableHorizontalPlaneBlockItem(BlockRegistry.FALLEN_SCARLET_LEAVES.get(), new Item.Properties()));
+    public static final RegistryObject<Item> ICHOR_PUDDLE = ITEMS.register("ichor_puddle",
+            () -> new ScalableHorizontalPlaneBlockItem(BlockRegistry.ICHOR_PUDDLE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> ICHOR_TORCH = ITEMS.register("ichor_torch",
+            () -> new StandingAndWallBlockItem(BlockRegistry.ICHOR_TORCH.get(), BlockRegistry.ICHOR_WALL_TORCH.get(), new Item.Properties(), Direction.DOWN));
 }

@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "penumbra_phantasm:block/cliffrock_eye",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "penumbra_phantasm:block/cliffrock_eye"
+    },
+    "facing=south": {
+      "model": "penumbra_phantasm:block/cliffrock_eye",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "penumbra_phantasm:block/cliffrock_eye",
+      "y": 270
+    },
+    "facing=up": {
+      "model": "penumbra_phantasm:block/cliffrock_eye",
+      "x": 270
+    },
+    "facing=down": {
+      "model": "penumbra_phantasm:block/cliffrock_eye",
+      "x": 90
+    }
+  }
+}

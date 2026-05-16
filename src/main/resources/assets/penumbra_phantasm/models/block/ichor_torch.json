@@ -1,0 +1,6 @@
+{
+  "parent": "penumbra_phantasm:block/template_torch_emissive",
+  "textures": {
+    "torch": "penumbra_phantasm:block/ichor_torch"
+  }
+}

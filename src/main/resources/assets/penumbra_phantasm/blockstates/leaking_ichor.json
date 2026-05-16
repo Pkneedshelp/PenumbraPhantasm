@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "penumbra_phantasm:block/leaking_ichor",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "penumbra_phantasm:block/leaking_ichor"
+    },
+    "facing=south": {
+      "model": "penumbra_phantasm:block/leaking_ichor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "penumbra_phantasm:block/leaking_ichor",
+      "y": 270
+    }
+  }
+}

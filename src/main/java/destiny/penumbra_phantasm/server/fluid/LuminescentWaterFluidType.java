@@ -1,5 +1,6 @@
 package destiny.penumbra_phantasm.server.fluid;
 
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.fluids.FluidType;
 
 import com.mojang.blaze3d.shaders.FogShape;
@@ -30,6 +31,16 @@ public class LuminescentWaterFluidType extends FluidType {
         this.overlayTexture = overlayTexture;
         this.tintColor = tintColor;
         this.fogColor = fogColor;
+    }
+
+    @Override
+    public boolean canSwim(Entity entity) {
+        return true;
+    }
+
+    @Override
+    public double motionScale(Entity entity) {
+        return 0.8;
     }
 
     public ResourceLocation getStillTexture() {

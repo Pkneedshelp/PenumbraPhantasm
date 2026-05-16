@@ -70,6 +70,7 @@ public class CreativeTabRegistry {
                 output.accept(ItemRegistry.ROSEGOLD_HOE.get());
 
                 output.accept(ItemRegistry.DARK_CANDY_STICK.get());
+                output.accept(ItemRegistry.ICHOR.get());
                 output.accept(ItemRegistry.IVORY.get());
                 output.accept(ItemRegistry.RAW_ROSEGOLD.get());
                 output.accept(ItemRegistry.ROSEGOLD_INGOT.get());
@@ -91,7 +92,7 @@ public class CreativeTabRegistry {
 
                 output.accept(BlockRegistry.SCARLET_SAPLING.get());
                 output.accept(BlockRegistry.SCARLET_LEAVES.get());
-                output.accept(BlockRegistry.FALLEN_SCARLET_LEAVES.get());
+                output.accept(ItemRegistry.FALLEN_SCARLET_LEAVES.get());
 
                 output.accept(BlockRegistry.SCARLET_LOG.get());
                 output.accept(BlockRegistry.SCARLET_PLANKS.get());
@@ -109,7 +110,7 @@ public class CreativeTabRegistry {
 
                 output.accept(BlockRegistry.DARK_CANDY_SAPLING.get());
                 output.accept(BlockRegistry.DARK_CANDY_LEAVES.get());
-                output.accept(BlockRegistry.FALLEN_DARK_CANDY_LEAVES.get());
+                output.accept(ItemRegistry.FALLEN_DARK_CANDY_LEAVES.get());
 
                 output.accept(BlockRegistry.DARK_CANDY_LOG.get());
 
@@ -246,6 +247,14 @@ public class CreativeTabRegistry {
                 output.accept(BlockRegistry.BLUE_CHECK.get());
                 output.accept(BlockRegistry.RED_CHECK.get());
                 output.accept(BlockRegistry.YELLOW_CHECK.get());
+
+                output.accept(BlockRegistry.CLIFFROCK_EYE.get());
+                output.accept(BlockRegistry.WEEPING_EYE.get());
+                output.accept(BlockRegistry.LEAKING_ICHOR.get());
+                output.accept(ItemRegistry.ICHOR_PUDDLE.get());
+                output.accept(BlockRegistry.ICHOR_BLOCK.get());
+                output.accept(ItemRegistry.ICHOR_TORCH.get());
+                output.accept(BlockRegistry.ICHOR_LANTERN.get());
 
                 output.accept(BlockRegistry.CLIFFROCK_PATH.get());
                 output.accept(BlockRegistry.CLIFFROCK_PILLAR.get());
