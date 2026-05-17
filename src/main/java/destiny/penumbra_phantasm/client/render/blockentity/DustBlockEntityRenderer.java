@@ -76,4 +76,9 @@ public class DustBlockEntityRenderer implements BlockEntityRenderer<DustBlockEnt
                     bufferSource.getBuffer(rt), true, level.getRandom(), ModelData.EMPTY, rt);
         }
     }
+
+    @Override
+    public int getViewDistance() {
+        return 256;
+    }
 }

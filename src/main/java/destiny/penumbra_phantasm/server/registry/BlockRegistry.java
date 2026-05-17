@@ -409,6 +409,8 @@ public class BlockRegistry {
 
     public static final RegistryObject<Block> DARK_MARBLE_DICE = registerBlock("dark_marble_dice", () -> new DarkMarbleDiceBlock(DARK_MARBLE_PROPERTIES));
     public static final RegistryObject<Block> SCARLET_MARBLE_DICE = registerBlock("scarlet_marble_dice", () -> new ScarletMarbleDiceBlock(SCARLET_MARBLE_PROPERTIES));
+    public static final RegistryObject<Block> DARK_MARBLE_DICE_GHOST = BLOCKS.register("dark_marble_dice_ghost", () -> new Block(BlockBehaviour.Properties.copy(Blocks.CALCITE).mapColor(MapColor.COLOR_GRAY).requiresCorrectToolForDrops().noOcclusion()));
+    public static final RegistryObject<Block> SCARLET_MARBLE_DICE_GHOST = BLOCKS.register("scarlet_marble_dice_ghost", () -> new Block(BlockBehaviour.Properties.copy(Blocks.CALCITE).mapColor(MapColor.COLOR_RED).requiresCorrectToolForDrops().noOcclusion()));
 
     //Ivory
     public static final RegistryObject<Block> IVORY_BLOCK = registerBlock("ivory_block", () -> new Block(IVORY_PROPERTIES));

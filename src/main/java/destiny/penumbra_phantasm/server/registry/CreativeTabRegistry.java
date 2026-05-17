@@ -250,6 +250,7 @@ public class CreativeTabRegistry {
                 output.accept(BlockRegistry.RED_CHECK.get());
                 output.accept(BlockRegistry.YELLOW_CHECK.get());
 
+                output.accept(BlockRegistry.DUST_BLOCK.get());
                 output.accept(BlockRegistry.CLIFFROCK_EYE.get());
                 output.accept(BlockRegistry.WEEPING_EYE.get());
                 output.accept(BlockRegistry.LEAKING_ICHOR.get());

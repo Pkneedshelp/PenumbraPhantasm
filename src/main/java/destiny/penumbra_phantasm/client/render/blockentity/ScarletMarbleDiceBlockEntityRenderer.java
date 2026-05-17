@@ -3,6 +3,7 @@ package destiny.penumbra_phantasm.client.render.blockentity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import destiny.penumbra_phantasm.server.block.entity.ScarletMarbleDiceBlockEntity;
+import destiny.penumbra_phantasm.server.registry.BlockRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -19,7 +20,6 @@ public class ScarletMarbleDiceBlockEntityRenderer implements BlockEntityRenderer
 
     @Override
     public void render(ScarletMarbleDiceBlockEntity scarletMarbleDiceBlock, float v, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        BlockState state = scarletMarbleDiceBlock.getBlockState();
         Level level = scarletMarbleDiceBlock.getLevel();
 
         if (level == null) return;
@@ -34,6 +34,8 @@ public class ScarletMarbleDiceBlockEntityRenderer implements BlockEntityRenderer
 
         poseStack.translate(-0.5, -0.5, -0.5);
 
+        BlockState state = BlockRegistry.SCARLET_MARBLE_DICE_GHOST.get().defaultBlockState();
+
         BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
         for (net.minecraft.client.renderer.RenderType rt : model.getRenderTypes(state, RandomSource.create(42), ModelData.EMPTY)) {
             Minecraft.getInstance().getBlockRenderer().renderBatched(state, scarletMarbleDiceBlock.getBlockPos(), level, poseStack,
@@ -41,5 +43,10 @@ public class ScarletMarbleDiceBlockEntityRenderer implements BlockEntityRenderer
         }
 
         poseStack.popPose();
+    }
+
+    @Override
+    public int getViewDistance() {
+        return 256;
     }
 }
