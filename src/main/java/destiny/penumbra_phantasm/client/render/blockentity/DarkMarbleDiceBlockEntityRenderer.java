@@ -1,16 +1,17 @@
 package destiny.penumbra_phantasm.client.render.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import destiny.penumbra_phantasm.server.block.entity.DarkMarbleDiceBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.client.model.data.ModelData;
 
 public class DarkMarbleDiceBlockEntityRenderer implements BlockEntityRenderer<DarkMarbleDiceBlockEntity> {
     public DarkMarbleDiceBlockEntityRenderer(BlockEntityRendererProvider.Context rendererDispatcherIn) {
@@ -19,10 +20,9 @@ public class DarkMarbleDiceBlockEntityRenderer implements BlockEntityRenderer<Da
     @Override
     public void render(DarkMarbleDiceBlockEntity darkMarbleDiceBlock, float v, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         BlockState state = darkMarbleDiceBlock.getBlockState();
-        BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
+        Level level = darkMarbleDiceBlock.getLevel();
 
-        RenderType renderType = RenderType.solid();
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(renderType);
+        if (level == null) return;
 
         poseStack.pushPose();
 
@@ -34,8 +34,11 @@ public class DarkMarbleDiceBlockEntityRenderer implements BlockEntityRenderer<Da
 
         poseStack.translate(-0.5, -0.5, -0.5);
 
-        Minecraft.getInstance().getBlockRenderer().getModelRenderer().renderModel(poseStack.last(), vertexConsumer, state, model,
-                1.0f, 1.0f, 1.0f, packedLight, packedOverlay);
+        BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
+        for (net.minecraft.client.renderer.RenderType rt : model.getRenderTypes(state, RandomSource.create(42), ModelData.EMPTY)) {
+            Minecraft.getInstance().getBlockRenderer().renderBatched(state, darkMarbleDiceBlock.getBlockPos(), level, poseStack,
+                    bufferSource.getBuffer(rt), true, level.getRandom(), ModelData.EMPTY, rt);
+        }
 
         poseStack.popPose();
     }

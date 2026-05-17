@@ -31,7 +31,9 @@
       "penumbra_phantasm:cliffs/weeping_eye_feature",
       "penumbra_phantasm:cliffs/cliffrock_eye_feature"
     ],
-    []
+    [
+      "penumbra_phantasm:cliffs/dust_feature"
+    ]
   ],
   "has_precipitation": false,
   "spawn_costs": {},

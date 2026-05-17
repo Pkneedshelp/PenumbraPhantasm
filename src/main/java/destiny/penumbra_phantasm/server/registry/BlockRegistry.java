@@ -284,7 +284,8 @@ public class BlockRegistry {
     public static final RegistryObject<Block> CLIFFROCK_SLIDE = registerBlock("cliffrock_slide", () -> new CliffrockSlideBlock(BlockBehaviour.Properties.copy(Blocks.STONE).mapColor(MapColor.COLOR_LIGHT_GRAY).requiresCorrectToolForDrops().sound(SoundTypeRegistry.CLIFF).noOcclusion()));
     public static final RegistryObject<Block> CLIFFROCK_PILLAR = registerBlock("cliffrock_pillar", () -> new RotatedPillarBlock(CLIFFROCK_PROPERTIES));
     public static final RegistryObject<Block> CHISELED_CLIFFROCK = registerBlock("chiseled_cliffrock", () -> new Block(CLIFFROCK_PROPERTIES));
-    public static final RegistryObject<Block> DUST_BLOCK = registerBlock("dust_block", () -> new DustBlock(BlockBehaviour.Properties.copy(Blocks.BLACK_WOOL).mapColor(MapColor.COLOR_LIGHT_GRAY).sound(SoundTypeRegistry.DUST).noOcclusion().instabreak()));
+    public static final RegistryObject<Block> DUST_BLOCK = registerBlock("dust_block", () -> new DustBlock(BlockBehaviour.Properties.copy(Blocks.BLACK_WOOL).mapColor(MapColor.COLOR_LIGHT_GRAY).sound(SoundTypeRegistry.DUST).noOcclusion().instabreak().noCollission()));
+    public static final RegistryObject<Block> DUST_BLOCK_GHOST = BLOCKS.register("dust_block_ghost", () -> new Block(BlockBehaviour.Properties.copy(Blocks.BLACK_WOOL).mapColor(MapColor.COLOR_LIGHT_GRAY).sound(SoundTypeRegistry.DUST).noOcclusion().instabreak().noCollission()));
 
     public static final RegistryObject<Block> CLIFFROCK_EYE = registerBlock("cliffrock_eye", () -> new GenericHorizontalOrientableBlock(CLIFFROCK_PROPERTIES));
     public static final RegistryObject<Block> WEEPING_EYE = registerBlock("weeping_eye", () -> new WeepingEyeBlock(BlockBehaviour.Properties.copy(Blocks.STONE).mapColor(MapColor.COLOR_BLACK).requiresCorrectToolForDrops().sound(SoundType.HONEY_BLOCK).randomTicks()));

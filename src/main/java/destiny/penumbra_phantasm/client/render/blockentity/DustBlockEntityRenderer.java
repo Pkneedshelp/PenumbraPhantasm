@@ -2,6 +2,7 @@ package destiny.penumbra_phantasm.client.render.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import destiny.penumbra_phantasm.server.block.entity.DustBlockEntity;
+import destiny.penumbra_phantasm.server.registry.BlockRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -21,8 +22,7 @@ public class DustBlockEntityRenderer implements BlockEntityRenderer<DustBlockEnt
     }
 
     @Override
-    public void render(DustBlockEntity blockEntity, float partialTick, PoseStack poseStack,
-                       MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+    public void render(DustBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         Level level = blockEntity.getLevel();
         if (level == null) return;
 
@@ -31,7 +31,7 @@ public class DustBlockEntityRenderer implements BlockEntityRenderer<DustBlockEnt
         if (state.hasProperty(ANIMATION_OFFSET) && state.hasProperty(BlockStateProperties.HORIZONTAL_FACING)) {
             int offset = state.getValue(ANIMATION_OFFSET);
             if (offset > 0) {
-                float speed = 0.2F;
+                float speed = 0.1F;
                 float radius = 0.1F;
 
                 float phase = offset * 0.3333F * (float) (2 * Math.PI);
@@ -55,6 +55,8 @@ public class DustBlockEntityRenderer implements BlockEntityRenderer<DustBlockEnt
                 poseStack.pushPose();
                 poseStack.translate(diagX * horizDisp, vertDisp, diagZ * horizDisp);
 
+                state = BlockRegistry.DUST_BLOCK_GHOST.get().defaultBlockState();
+
                 BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
                 for (net.minecraft.client.renderer.RenderType rt : model.getRenderTypes(state, RandomSource.create(42), ModelData.EMPTY)) {
                     Minecraft.getInstance().getBlockRenderer().renderBatched(state, blockEntity.getBlockPos(), level, poseStack,
@@ -65,6 +67,8 @@ public class DustBlockEntityRenderer implements BlockEntityRenderer<DustBlockEnt
                 return;
             }
         }
+
+        state = BlockRegistry.DUST_BLOCK_GHOST.get().defaultBlockState();
 
         BakedModel model = Minecraft.getInstance().getBlockRenderer().getBlockModel(state);
         for (net.minecraft.client.renderer.RenderType rt : model.getRenderTypes(state, RandomSource.create(42), ModelData.EMPTY)) {

@@ -15,9 +15,9 @@ public class SoundTypeRegistry {
 
     public static final SoundType DUST = new ForgeSoundType(1.0F, 1.0F,
             () -> SoundRegistry.DUST_BREAK.get(),
-            () -> SoundEvents.WOOL_STEP,
-            () -> SoundEvents.WOOL_PLACE,
-            () -> SoundEvents.WOOL_HIT,
-            () -> SoundEvents.WOOL_FALL
+            () -> SoundEvents.SOUL_SAND_STEP,
+            () -> SoundEvents.SOUL_SAND_PLACE,
+            () -> SoundEvents.SOUL_SAND_HIT,
+            () -> SoundEvents.SOUL_SAND_FALL
     );
 }

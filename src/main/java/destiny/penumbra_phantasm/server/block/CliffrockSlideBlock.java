@@ -23,9 +23,8 @@ import net.minecraft.world.phys.shapes.Shapes;
 
 public class CliffrockSlideBlock extends HorizontalDirectionalBlock {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
-    private static final String SOUND_COOLDOWN = "penumbra_phantasm.cliffrock_slide_sound_cooldown";
+    //private static final String SOUND_COOLDOWN = "penumbra_phantasm.cliffrock_slide_sound_cooldown";
 
-    // Cached shapes: 1px smaller on the facing side
     private static final VoxelShape SHAPE_NORTH = Shapes.create(0, 0, (1 / 16.0) * 2, 1, 1, 1);
     private static final VoxelShape SHAPE_SOUTH = Shapes.create(0, 0, 0, 1, 1, 14/16.0);
     private static final VoxelShape SHAPE_WEST = Shapes.create((1/16.0) * 2, 0, 0, 1, 1, 1);
@@ -58,7 +57,7 @@ public class CliffrockSlideBlock extends HorizontalDirectionalBlock {
             case SOUTH -> SHAPE_SOUTH;
             case WEST  -> SHAPE_WEST;
             case EAST  -> SHAPE_EAST;
-            default    -> Shapes.block(); // fallback, shouldn't happen
+            default    -> Shapes.block();
         };
     }
 
@@ -69,7 +68,6 @@ public class CliffrockSlideBlock extends HorizontalDirectionalBlock {
             return;
         }
 
-        // Only teleport if this is the top block of the pillar (nothing above)
         if (level.getBlockState(pos.above()).is(this)) {
             super.stepOn(level, pos, state, entity);
             return;
@@ -77,36 +75,33 @@ public class CliffrockSlideBlock extends HorizontalDirectionalBlock {
 
         Direction facing = state.getValue(FACING);
 
-        // Target: center of the block on the two orthogonal axes,
-        // exactly on the facing face (1 px into the indent) at mid-height.
         double targetX = pos.getX() + 0.5;
-        double targetY = pos.getY() + 0.5;  // center of the block
+        double targetY = pos.getY() + 0.5;
         double targetZ = pos.getZ() + 0.5;
 
-        // Offset to the exact face
-        double faceOffset = 0.7; // half a block -> center to face
+        double faceOffset = 0.7;
         targetX += facing.getStepX() * faceOffset;
         targetZ += facing.getStepZ() * faceOffset;
 
-        // Teleport the entity
         entity.teleportTo(targetX, targetY, targetZ);
         entity.fallDistance = 0.0F;
-        // Give a tiny downward push so the slide starts visibly
         entity.setDeltaMovement(entity.getDeltaMovement().multiply(1, 0, 1).add(0, -0.05, 0));
+
+        level.playSound(null, pos, SoundRegistry.SLIDE_DOWN.get(), SoundSource.BLOCKS, 0.5F, 1.0F);
 
         super.stepOn(level, pos, state, entity);
     }
 
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        entity.makeStuckInBlock(state, new Vec3(1.0d, 1.0d, 1.0d));
+        //entity.makeStuckInBlock(state, new Vec3(1.0d, 1.0d, 1.0d));
         entity.fallDistance = 0.0F;
 
-        long currentTime = level.getGameTime();
+/*        long currentTime = level.getGameTime();
         long nextSoundTime = entity.getPersistentData().getLong(SOUND_COOLDOWN);
         if (currentTime >= nextSoundTime) {
-            level.playSound(null, pos, SoundRegistry.SLIDE_DOWN.get(), SoundSource.BLOCKS, 0.4F, 1.0F);
+            level.playSound(null, pos, SoundRegistry.SLIDE_DOWN.get(), SoundSource.BLOCKS, 0.5F, 1.0F);
             entity.getPersistentData().putLong(SOUND_COOLDOWN, currentTime + 22);
-        }
+        }*/
     }
 }

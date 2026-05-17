@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
@@ -32,7 +34,7 @@ public class DustBlock extends BaseEntityBlock {
 
     @Override
     public RenderShape getRenderShape(BlockState state) {
-        return RenderShape.MODEL;
+        return RenderShape.INVISIBLE;
     }
 
     @Override
@@ -56,9 +58,9 @@ public class DustBlock extends BaseEntityBlock {
 
         BlockState blockState = this.defaultBlockState().setValue(HORIZONTAL_FACING, pContext.getHorizontalDirection().getOpposite());
         if (pContext.getPlayer().isCrouching()) {
-            blockState.setValue(ANIMATION_OFFSET, 0);
+            blockState = blockState.setValue(ANIMATION_OFFSET, 0);
         } else  {
-            blockState.setValue(ANIMATION_OFFSET, level.random.nextInt(1, 3));
+            blockState = blockState.setValue(ANIMATION_OFFSET, level.random.nextInt(1, 4));
         }
 
         int neighborCount = 0;
@@ -69,10 +71,15 @@ public class DustBlock extends BaseEntityBlock {
         }
 
         if (neighborCount == 4) {
-            blockState.setValue(SPAWN_PARTICLES, true);
+            blockState = blockState.setValue(SPAWN_PARTICLES, true);
         }
 
         return blockState;
+    }
+
+    @Override
+    public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
+        pEntity.makeStuckInBlock(pState, new Vec3(0.8, 0.8, 0.8));
     }
 
     @Override

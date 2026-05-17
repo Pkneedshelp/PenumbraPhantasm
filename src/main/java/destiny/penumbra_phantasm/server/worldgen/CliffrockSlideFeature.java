@@ -23,11 +23,10 @@ public class CliffrockSlideFeature extends Feature<NoneFeatureConfiguration> {
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         WorldGenLevel level = context.level();
-        BlockPos originPos = context.origin(); // from WORLD_SURFACE_WG
+        BlockPos originPos = context.origin();
         List<BlockPos> toPlace = new ArrayList<>();
         boolean foundCliffStart = false;
 
-        // 1. Build the exposed column (skip possible dirt cap)
         for (int i = 0; i < 64; i++) {
             BlockPos currentPos = originPos.below(i);
             BlockState state = level.getBlockState(currentPos);
@@ -36,8 +35,8 @@ public class CliffrockSlideFeature extends Feature<NoneFeatureConfiguration> {
                     state.is(BlockRegistry.CLIFFROCK_PATH.get());
 
             if (!isCliffrock) {
-                if (foundCliffStart) break;   // end of the cliff layer
-                else continue;                // still above, ignore
+                if (foundCliffStart) break;
+                else continue;
             }
 
             foundCliffStart = true;
@@ -52,14 +51,12 @@ public class CliffrockSlideFeature extends Feature<NoneFeatureConfiguration> {
             if (facing != null) {
                 toPlace.add(currentPos);
             } else {
-                break; // no air exposure → cliff face ends
+                break;
             }
         }
 
-        // 2. Minimum length of 3
         if (toPlace.size() < 3) return false;
 
-        // 3. Landing validation
         BlockPos lastPos = toPlace.get(toPlace.size() - 1);
         Direction lastFacing = null;
         for (Direction dir : Direction.Plane.HORIZONTAL) {
@@ -68,14 +65,13 @@ public class CliffrockSlideFeature extends Feature<NoneFeatureConfiguration> {
                 break;
             }
         }
-        if (lastFacing == null) return false; // should never happen
+        if (lastFacing == null) return false;
 
         BlockPos landingPos = lastPos.relative(lastFacing).below();
         if (level.getBlockState(landingPos).isAir()) {
-            return false; // no ground – player would fall
+            return false;
         }
 
-        // 4. Place the slide blocks
         for (BlockPos pos : toPlace) {
             for (Direction dir : Direction.Plane.HORIZONTAL) {
                 if (level.getBlockState(pos.relative(dir)).isAir()) {
