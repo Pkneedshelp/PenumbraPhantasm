@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "penumbra_phantasm:card_kingdom_cobblestone"
+    }
+  },
+  "pattern": [
+    "###",
+    "# #",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "item": "penumbra_phantasm:umbrastone_furnace"
+  },
+  "show_notification": true
+}

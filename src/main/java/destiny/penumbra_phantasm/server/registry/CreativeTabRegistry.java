@@ -133,6 +133,8 @@ public class CreativeTabRegistry {
                 output.accept(BlockRegistry.UMBRASTONE_PILLAR.get());
                 output.accept(BlockRegistry.CHISELED_UMBRASTONE.get());
 
+                output.accept(BlockRegistry.UMBRASTONE_FURNACE.get());
+
                 output.accept(BlockRegistry.POLISHED_UMBRASTONE.get());
                 output.accept(BlockRegistry.POLISHED_UMBRASTONE_STAIRS.get());
                 output.accept(BlockRegistry.POLISHED_UMBRASTONE_SLAB.get());
