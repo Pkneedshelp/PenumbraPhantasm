@@ -76,7 +76,7 @@ public class CliffrockSlideBlock extends HorizontalDirectionalBlock {
         Direction facing = state.getValue(FACING);
 
         double targetX = pos.getX() + 0.5;
-        double targetY = pos.getY() + 0.5;
+        double targetY = pos.above().getY() + 0.5;
         double targetZ = pos.getZ() + 0.5;
 
         double faceOffset = 0.7;
