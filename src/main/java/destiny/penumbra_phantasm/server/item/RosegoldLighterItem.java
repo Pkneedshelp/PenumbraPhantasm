@@ -73,7 +73,7 @@ public class RosegoldLighterItem extends Item {
                         stack.getTag().putInt(ATTEMPTS, 0);
                     }
 
-                    level.playSound(null, pos, SoundRegistry.LIGHTER_TRY.get(), SoundSource.PLAYERS, 0.5F, 1.0F);
+                    level.playSound(null, pos, SoundRegistry.LIGHTER_TRY.get(), SoundSource.PLAYERS, 0.4F, 1.0F);
                     level.playSound(null, pos, SoundRegistry.LIGHTER_LIGHT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
                 } else {
                     if (!level.isClientSide()) {
@@ -113,7 +113,7 @@ public class RosegoldLighterItem extends Item {
         if (uses <= 0) {
             BlockPos pos = player.blockPosition();
 
-            level.playSound(null, pos, SoundRegistry.LIGHTER_TRY.get(), SoundSource.PLAYERS, 0.5F, 1.0F);
+            level.playSound(null, pos, SoundRegistry.LIGHTER_TRY.get(), SoundSource.PLAYERS, 0.4F, 1.0F);
 
             return InteractionResult.PASS;
         }
