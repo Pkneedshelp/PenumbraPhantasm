@@ -383,6 +383,8 @@ public class BlockRegistry {
             () -> new GreatDoorSpawnerBlock(BlockBehaviour.Properties.of().strength(-1.0F, 3600000.0F).noLootTable().pushReaction(PushReaction.BLOCK)));
     public static final RegistryObject<Block> ROSEGOLD_PILLAR = registerBlock("rosegold_pillar", () -> new RotatedPillarBlock(ROSEGOLD_PROPERTIES));
     public static final RegistryObject<Block> UMBRASTONE_ROSEGOLD_ORE = registerBlock("umbrastone_rosegold_ore", () -> new Block(BlockBehaviour.Properties.copy(Blocks.GOLD_ORE).mapColor(MapColor.COLOR_YELLOW).requiresCorrectToolForDrops().sound(SoundType.STONE)));
+    public static final RegistryObject<Block> CHESHIRE_CHEST = BLOCKS.register("cheshire_chest",
+            () -> new CheshireChestBlock(BlockBehaviour.Properties.copy(Blocks.ENDER_CHEST).noOcclusion().sound(SoundType.COPPER).strength(5F)));
 
     //Rosegold
     public static final RegistryObject<Block> ROSEGOLD_BLOCK = registerBlock("rosegold_block", () -> new Block(ROSEGOLD_PROPERTIES));
