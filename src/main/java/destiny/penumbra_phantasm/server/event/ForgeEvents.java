@@ -14,9 +14,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -43,19 +47,26 @@ public class ForgeEvents {
     }
 
     @SubscribeEvent
-    public static void fillBucketEvent(FillBucketEvent event) {
-        Level level = event.getLevel();
+    public static void onFillBucket(FillBucketEvent event) {
         ItemStack emptyBucket = event.getEmptyBucket();
-        ItemStack filledBucket = event.getFilledBucket();
+
+        if (!(emptyBucket.getItem() instanceof BucketItem bucketItem) || bucketItem.getFluid() != Fluids.EMPTY) {
+            return;
+        }
+
+        Level level = event.getLevel();
         Vec3 location = event.getTarget().getLocation();
         BlockPos clickPos = BlockPos.containing(location.x, location.y, location.z);
+        BlockState blockState = level.getBlockState(clickPos);
+        FluidState fluidState = blockState.getFluidState();
 
-        if (level.getBlockState(clickPos).getBlock() instanceof LuminescentWaterFluidBlock
-                || level.getBlockState(clickPos).getFluidState().is(FluidRegistry.SOURCE_PURE_DARKNESS.get()))
-        {
-            if (!(emptyBucket.getItem() instanceof ScarletBucketItem)) {
-                event.setCanceled(true);
-            }
+        boolean isCustomFluid = blockState.getBlock() instanceof LuminescentWaterFluidBlock
+                || fluidState.is(FluidRegistry.SOURCE_PURE_DARKNESS.get());
+
+        boolean isScarletBucket = emptyBucket.getItem() instanceof ScarletBucketItem;
+
+        if ((isCustomFluid && !isScarletBucket) || (!isCustomFluid && isScarletBucket)) {
+            event.setCanceled(true);
         }
     }
 }
