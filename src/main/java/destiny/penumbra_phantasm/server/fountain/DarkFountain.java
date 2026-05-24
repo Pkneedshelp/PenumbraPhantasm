@@ -313,14 +313,16 @@ public class DarkFountain {
             }
             fillRate = Math.max(1, room.getPositions().size() / TRANSPORT_TICKER_DURATION);
 
-            for (int i = 0; i < fillRate && room.fillIndex < room.getPositions().size(); i++) {
+            int placed = 0;
+            while (room.fillIndex < room.getPositions().size() && placed < fillRate) {
                 BlockPos pos = room.getPositions().get(room.fillIndex);
                 BlockState current = level.getBlockState(pos);
-                if (current.is(Blocks.AIR) || current.is(Blocks.CAVE_AIR) || current.is(Blocks.VOID_AIR)) {
+                if (current.isAir()) {
                     level.setBlock(pos, BlockRegistry.DARKNESS.get().defaultBlockState(), 3);
                     if (level.getBlockEntity(pos) instanceof DarknessBlockEntity darkness) {
                         darkness.fountainPos = this.fountainPos;
                     }
+                    placed++;
                 }
                 room.fillIndex++;
             }
@@ -601,11 +603,7 @@ public class DarkFountain {
                 room.doorPositions = result.getDoorPositions();
                 room.outsideDoors = new HashMap<>(result.getOutsideDoors());
                 room.sharedDoors = new HashMap<>(result.getSharedDoors());
-                int alreadyFilled = 0;
-                for (BlockPos pos : room.positions) {
-                    if (level.getBlockState(pos).getBlock() instanceof DarknessBlock) alreadyFilled++;
-                }
-                room.fillIndex = alreadyFilled;
+                room.fillIndex = 0;
             }
         }
 

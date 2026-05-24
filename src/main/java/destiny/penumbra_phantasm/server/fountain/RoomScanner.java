@@ -72,7 +72,7 @@ public class RoomScanner {
 
                 BlockState state = level.getBlockState(neighborPos);
 
-                if (state.is(Blocks.AIR) || state.is(Blocks.CAVE_AIR) || state.is(Blocks.VOID_AIR)) {
+                if (state.isAir()) {
                     visitedPositions.add(neighborPos);
                     queue.add(neighborPos);
                 } else if (includeDarkness && state.getBlock() instanceof DarknessBlock) {
@@ -88,21 +88,15 @@ public class RoomScanner {
                         doorPositions.add(neighborPos);
                     }
                 } else {
-                    for (Map.Entry<ResourceKey<DarkWorldType>, DarkWorldType> darkWorldTypeEntry : darkWorldTypeRegistry.entrySet()) {
-                        DarkWorldType darkWorldType = darkWorldTypeEntry.getValue();
-                        TagKey<Block> currentTag = DarkWorldUtil.getBlockTag(darkWorldType.blockTag());
-
-                        if (state.is(currentTag)) {
+                    for (Map.Entry<ResourceKey<DarkWorldType>, DarkWorldType> entry : darkWorldTypeRegistry.entrySet()) {
+                        if (state.is(DarkWorldUtil.getBlockTag(entry.getValue().blockTag()))) {
                             visitedPositions.add(neighborPos);
                             keyBlockPositions.add(neighborPos);
+                            break;
                         }
                     }
                 }
             }
-        }
-
-        if (positions.size() > maxVolume) {
-            return RoomScanResult.failure();
         }
 
         positions.sort(Comparator.comparingInt((BlockPos pos) -> pos.getY()).reversed());
