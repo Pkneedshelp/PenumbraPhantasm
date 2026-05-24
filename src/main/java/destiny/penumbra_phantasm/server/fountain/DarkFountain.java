@@ -319,6 +319,12 @@ public class DarkFountain {
                     }
                     placed++;
                 }
+                else if (current.getBlock() instanceof DarknessBlock) {
+                    if (level.getBlockEntity(pos) instanceof DarknessBlockEntity darkness) {
+                        darkness.fountainPos = this.fountainPos;
+                        darkness.setChanged();
+                    }
+                }
                 room.fillIndex++;
             }
 
@@ -598,7 +604,18 @@ public class DarkFountain {
                 room.doorPositions = result.getDoorPositions();
                 room.outsideDoors = new HashMap<>(result.getOutsideDoors());
                 room.sharedDoors = new HashMap<>(result.getSharedDoors());
-                room.fillIndex = 0;
+
+                int alreadyFilled = 0;
+                for (BlockPos pos : room.positions) {
+                    if (level.getBlockState(pos).getBlock() instanceof DarknessBlock) alreadyFilled++;
+                }
+
+                room.fillIndex = alreadyFilled;
+
+                int totalDarkness = DarkRoom.getTotalDarknessCount(rooms);
+                int remainingVolume = ServerConfig.maxRoomVolume - totalDarkness;
+
+                RoomScanner.reclassifyDoorsWithRemainingBudget(level, room, Math.max(0, remainingVolume), otherAnchors, otherRoomCells);
             }
         }
 
@@ -673,7 +690,7 @@ public class DarkFountain {
                     if (otherFountainAnchors != null && otherFountainAnchors.contains(adjacent)) continue;
 
                     BlockState adjState = level.getBlockState(adjacent);
-                    if (!adjState.is(Blocks.AIR) && !adjState.is(Blocks.CAVE_AIR) && !adjState.is(Blocks.VOID_AIR))
+                    if (!adjState.isAir())
                         continue;
 
                     RoomScanner.RoomScanResult result = RoomScanner.scan(level, adjacent, remainingVolume, false, false, otherFountainAnchors, otherRoomCells);
