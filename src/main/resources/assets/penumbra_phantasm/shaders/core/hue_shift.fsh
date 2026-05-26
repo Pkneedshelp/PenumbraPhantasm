@@ -52,14 +52,13 @@ void main() {
     vec3 rgb = clamp(base.rgb, 0.0, 1.0);
     vec3 hsl = rgb2hsl(rgb);
 
-    // Give greys a minimum saturation so the hue shift becomes visible.
-    // The minimum saturation scales with Strength, so when Strength=0 nothing changes.
-    float minSat = Strength * 0.5;
-    hsl.y = max(hsl.y, minSat);
-
-    // Shift the hue toward the target hue, mixing strength.
-    hsl.x = mix(hsl.x, HueTarget, Strength);
+    // Force the hue to the target and saturate at least as much as the original tint (0.8)
+    hsl.x = HueTarget;
+    hsl.y = max(hsl.y, 0.8);
 
     vec3 shifted = hsl2rgb(hsl);
-    fragColor = vec4(shifted, base.a);
+
+    // Fade the effect by blending toward the original pixel
+    fragColor.rgb = mix(base.rgb, shifted, Strength);
+    fragColor.a = base.a;
 }
