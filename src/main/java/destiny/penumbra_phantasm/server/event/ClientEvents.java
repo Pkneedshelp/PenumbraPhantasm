@@ -377,15 +377,12 @@ public class ClientEvents {
 		int screenWidth = window.getGuiScaledWidth();
 		int screenHeight = window.getGuiScaledHeight();
 
-		// Position of the main hotbar bar
 		int x = screenWidth / 2 - 182 / 2;
 		int y = screenHeight - 22 - 12;
 
-		// First pass: draw the background
 		RenderSystem.setShaderTexture(0, DARK_WORLD_HOTBAR);
 		gui.blit(DARK_WORLD_HOTBAR, x, y, 0, 0, 182, 38);
 
-		// Second pass: draw all items (and their decorations)
 		for (int slot = 0; slot < 9; slot++) {
 			ItemStack stack = player.getInventory().items.get(slot);
 			if (!stack.isEmpty()) {
@@ -395,7 +392,6 @@ public class ClientEvents {
 			}
 		}
 
-		// Third pass: draw selection highlight (now definitely above all items)
 		int selected = player.getInventory().selected;
 		int selectedSlotX = x + selected * 18;
 		long period = 20 * 5; // 100
@@ -411,7 +407,6 @@ public class ClientEvents {
 		RenderSystem.setShaderTexture(0, DARK_WORLD_HOTBAR_GLOW);
 		RenderBlitUtil.blitGui(gui, DARK_WORLD_HOTBAR_GLOW, selectedSlotX, y, 182, 0, 38, 38, glow, glow, glow, 1);
 
-		// 3. Off‑hand slot (only if not empty)
 		RenderSystem.setShaderTexture(0, DARK_WORLD_HOTBAR);
 		ItemStack offhand = player.getOffhandItem();
 
@@ -419,10 +414,8 @@ public class ClientEvents {
 			int offX = x - 29;
 			int offY = y + 8;
 			gui.blit(DARK_WORLD_HOTBAR, offX + 2, offY + 2, 223, 15, 18, 18);
-			// Items need their own binding, but after we draw them we should rebind again
 			gui.renderItem(offhand, offX + 3, offY + 3);
 			gui.renderItemDecorations(mc.font, offhand, offX + 3, offY + 3);
-			// No more blitting of widgets after this, so rebinding isn't critical, but good practice
 		}
 
 		RenderSystem.enableBlend();
@@ -518,7 +511,6 @@ public class ClientEvents {
 		boolean blinking = healthBlinkTime > (long) tickCount && (healthBlinkTime - (long) tickCount) / 3L % 2L == 1L;
 		long now = Util.getMillis();
 
-		// Update health blink state
 		if (currentHealth < lastHealth && player.invulnerableTime > 0) {
 			lastHealthTime = now;
 			healthBlinkTime = (long) (tickCount + 20);
@@ -553,7 +545,6 @@ public class ClientEvents {
 			regenerationOffset = tickCount % Mth.ceil(maxHealth + 5.0F);
 		}
 
-		// Armor
 		mc.getProfiler().push("armor");
 		for (int i = 0; i < 10; ++i) {
 			if (armor > 0) {
@@ -571,14 +562,11 @@ public class ClientEvents {
 		}
 		mc.getProfiler().popPush("health");
 
-		// Hearts
 		renderHearts(gui, player, leftX, healthY, rowHeight, regenerationOffset, maxHealth, currentHealth, displayHealthValue, absorption, blinking);
 
-		// Mount health (if riding)
 		LivingEntity mount = getPlayerVehicleWithHealth(mc, player);
 		int mountHearts = getVehicleMaxHearts(mount);
 		if (mountHearts == 0) {
-			// Food (hunger)
 			mc.getProfiler().popPush("food");
 			for (int i = 0; i < 10; ++i) {
 				int y = healthY;
@@ -603,7 +591,6 @@ public class ClientEvents {
 			foodY -= 10;
 			mc.getProfiler().pop();
 		} else {
-			// Mount health (rendered later in vanilla, but we can call it here)
 			renderVehicleHealth(mc, gui, window, mount);
 		}
 
@@ -644,8 +631,9 @@ public class ClientEvents {
 		return (int) Math.ceil((double) maxHearts / 10.0);
 	}
 
-	private static void renderHearts(GuiGraphics gui, Player player, int x, int y, int rowHeight, int regenerationOffset,
-									 float maxHealth, int currentHealth, int displayHealth, int absorption, boolean blink) {
+	private static void renderHearts(GuiGraphics gui, Player player, int x, int y, int rowHeight,
+									 int regenerationOffset, float maxHealth, int currentHealth,
+									 int displayHealth, int absorption, boolean blink) {
 		Gui.HeartType heartType = Gui.HeartType.forPlayer(player);
 		int hardcoreOffset = (player.level().getLevelData().isHardcore() ? 5 : 0) * 9;
 		int totalHearts = Mth.ceil(maxHealth / 2.0F);
@@ -664,8 +652,7 @@ public class ClientEvents {
 				heartY -= 2;
 			}
 
-			// Container (empty heart)
-			renderHeart(gui, Gui.HeartType.CONTAINER, heartX, heartY, hardcoreOffset, blink, false);
+			renderHeart(gui, Gui.HeartType.CONTAINER, heartX, heartY, hardcoreOffset, false, false);
 
 			int heartIndex = i * 2;
 			boolean isAbsorption = i >= totalHearts;
@@ -686,6 +673,23 @@ public class ClientEvents {
 			if (heartIndex < currentHealth) {
 				boolean half = heartIndex + 1 == currentHealth;
 				renderHeart(gui, heartType, heartX, heartY, hardcoreOffset, false, half);
+			}
+		}
+
+		if (blink) {
+			for (int i = totalRows - 1; i >= 0; --i) {
+				int row = i / 10;
+				int col = i % 10;
+				int heartX = x + col * 8;
+				int heartY = y - row * rowHeight;
+				if (currentHealth + absorption <= 4) {
+					heartY += random.nextInt(2);
+				}
+				if (i < totalHearts && i == regenerationOffset) {
+					heartY -= 2;
+				}
+				renderHeart(gui, Gui.HeartType.CONTAINER, heartX, heartY, hardcoreOffset, false, false);
+				renderHeart(gui, Gui.HeartType.CONTAINER, heartX, heartY, hardcoreOffset, true, false);
 			}
 		}
 	}
