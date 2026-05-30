@@ -11,6 +11,7 @@ import destiny.penumbra_phantasm.client.render.dimension.CardKingdomDimensionEff
 import destiny.penumbra_phantasm.client.ClientConfig;
 import destiny.penumbra_phantasm.client.render.GreatDoorRenderUtil;
 import destiny.penumbra_phantasm.client.render.screen.DarkWorldInventoryScreen;
+import destiny.penumbra_phantasm.client.render.screen.DarkWorldPauseScreen;
 import destiny.penumbra_phantasm.server.fountain.GreatDoor;
 import destiny.penumbra_phantasm.server.util.DarkWorldUtil;
 import net.minecraft.Util;
@@ -18,6 +19,7 @@ import net.minecraft.client.AttackIndicatorStatus;
 import net.minecraft.client.Options;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.PauseScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -310,13 +312,17 @@ public class ClientEvents {
 	@SubscribeEvent
 	public static void onScreenOpen(ScreenEvent.Opening event) {
 		Screen newScreen = event.getNewScreen();
-		Player player = Minecraft.getInstance().player;
+		Minecraft minecraft = Minecraft.getInstance();
+		Player player = minecraft.player;
 		if (player == null)
 			return;
 
 		if (DarkWorldUtil.isDarkWorld(player.level())) {
 			if (newScreen instanceof InventoryScreen) {
 				event.setNewScreen(new DarkWorldInventoryScreen(player));
+			}
+			if (newScreen instanceof PauseScreen) {
+				event.setNewScreen(new DarkWorldPauseScreen(true));
 			}
 		}
 	}
@@ -394,7 +400,7 @@ public class ClientEvents {
 
 		int selected = player.getInventory().selected;
 		int selectedSlotX = x + selected * 18;
-		long period = 20 * 5; // 100
+		long period = 20 * 5;
 		long elapsed = mc.level.getGameTime() % period;
 		float t = (float) elapsed / period;
 		float glow = Mth.sin(t * Mth.PI);

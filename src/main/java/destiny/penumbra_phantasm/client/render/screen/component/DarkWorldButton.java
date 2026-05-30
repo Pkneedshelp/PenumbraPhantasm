@@ -1,11 +1,11 @@
 package destiny.penumbra_phantasm.client.render.screen.component;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import destiny.penumbra_phantasm.PenumbraPhantasm;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -20,8 +20,9 @@ import java.util.function.Supplier;
 
 @OnlyIn(Dist.CLIENT)
 public class DarkWorldButton extends AbstractButton {
-    public static final ResourceLocation DEFAULT_TEXTURE = new ResourceLocation("textures/gui/widgets.png");
-    protected static final DarkWorldButton.CreateNarration DEFAULT_NARRATION = (p_253298_) -> (MutableComponent)p_253298_.get();
+    public static final ResourceLocation DEFAULT_TEXTURE = new ResourceLocation(PenumbraPhantasm.MODID, "textures/gui/dark_world/widgets.png");
+    public static final ResourceLocation DEFAULT_TEXTURE_GLOW = new ResourceLocation(PenumbraPhantasm.MODID, "textures/gui/dark_world/widgets_glow.png");
+    protected static final DarkWorldButton.CreateNarration DEFAULT_NARRATION = (p_253298_) -> p_253298_.get();
     public static final int DEFAULT_TEXTURE_X = 0;
     public static final int DEFAULT_TEXTURE_Y = 46;
     public static final int DEFAULT_TEXTURE_WIDTH = 200;
@@ -117,16 +118,31 @@ public class DarkWorldButton extends AbstractButton {
     @Override
     protected void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         Minecraft minecraft = Minecraft.getInstance();
+        long periodMs = 5000;
+        long elapsed = System.currentTimeMillis() % periodMs;
+        float t = (float) elapsed / periodMs;
+        float glow = Mth.sin(t * Mth.PI * 2);
+
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, this.alpha);
         RenderSystem.enableBlend();
         RenderSystem.enableDepthTest();
-
         guiGraphics.blitNineSliced(texture,
                 this.getX(), this.getY(),
                 this.getWidth(), this.getHeight(),
                 borderX, borderY,
                 textureWidth, stateHeight,
                 getTextureU(), getTextureV());
+
+        if (isHoveredOrFocused()) {
+            guiGraphics.setColor(glow, glow, glow, this.alpha);
+
+            guiGraphics.blitNineSliced(DEFAULT_TEXTURE_GLOW,
+                    this.getX(), this.getY(),
+                    this.getWidth(), this.getHeight(),
+                    borderX, borderY,
+                    textureWidth, stateHeight,
+                    getTextureU(), getTextureV());
+        }
 
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
         int color = this.getFGColor();
