@@ -41,8 +41,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class FireDoorBlock extends BaseEntityBlock {
     public static final VoxelShape SOUTH_AABB = Block.box(0.0F, 0.0F, 0.0F, 16.0F, 16.0F, 3.0F);
@@ -90,11 +92,10 @@ public class FireDoorBlock extends BaseEntityBlock {
             List<FireDoor> allDoors = cap.playerFireDoors;
             ResourceKey<Level> currentDim = pLevel.dimension();
 
-            //Door validation
+            //Validate doors
             List<FireDoor> invalidDoors = new ArrayList<>();
-            for (int i = 0; i < allDoors.size(); i++) {
-                FireDoor fireDoor = allDoors.get(i);
-
+            List<Map.Entry<FireDoor, FireDoor>> doorsToUpdate = new ArrayList<>();
+            for (FireDoor fireDoor : allDoors) {
                 if (!fireDoor.darkWorld().equals(currentDim)) continue;
 
                 BlockPos doorPos = fireDoor.doorPos();
@@ -119,25 +120,35 @@ public class FireDoorBlock extends BaseEntityBlock {
 
                 if (angleChanged || nameChanged) {
                     FireDoor updated = new FireDoor(fireDoor.darkWorld(), doorPos, currentYRot, currentName);
-                    allDoors.set(i, updated);
+                    doorsToUpdate.add(new AbstractMap.SimpleEntry<>(fireDoor, updated));
                 }
             }
 
-            for (FireDoor fireDoor : invalidDoors) {
-                cap.removeFireDoor(fireDoor.darkWorld(), fireDoor.doorPos());
+            //Remove invalid doors from capability
+            for (FireDoor invalid : invalidDoors) {
+                cap.removeFireDoor(invalid.darkWorld(), invalid.doorPos());
             }
-            allDoors.removeAll(invalidDoors);
 
+            //Update changed doors in capability
+            for (Map.Entry<FireDoor, FireDoor> entry : doorsToUpdate) {
+                FireDoor oldDoor = entry.getKey();
+                FireDoor newDoor = entry.getValue();
+                cap.removeFireDoor(oldDoor.darkWorld(), oldDoor.doorPos());
+                cap.addFireDoor(newDoor.darkWorld(), newDoor.doorPos(), newDoor.facingAngle(), newDoor.name());
+            }
+
+            //Populate list of same dark world doors
             List<FireDoor> sameDimDoors = new ArrayList<>();
-            for (FireDoor fireDoor : allDoors) {
+            for (FireDoor fireDoor : cap.playerFireDoors) {
                 if (fireDoor.darkWorld().equals(currentDim)) {
                     sameDimDoors.add(fireDoor);
                 }
             }
 
+            //If not a block entity, pass
             BlockPos lowerPos = pState.getValue(HALF) == DoubleBlockHalf.UPPER ? pPos.below() : pPos;
-            BlockEntity be = pLevel.getBlockEntity(lowerPos);
-            if (!(be instanceof FireDoorBlockEntity fireDoorEntity)) return InteractionResult.FAIL;
+            BlockEntity blockEntity = pLevel.getBlockEntity(lowerPos);
+            if (!(blockEntity instanceof FireDoorBlockEntity fireDoorEntity)) return InteractionResult.FAIL;
 
             int doorIndex = cap.findDoorIndexInList(currentDim, lowerPos);
             boolean hasDoor = doorIndex != -1;
