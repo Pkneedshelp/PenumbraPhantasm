@@ -78,6 +78,10 @@ public class CheshireChestBlock extends BaseEntityBlock {
             return InteractionResult.SUCCESS;
         }
 
+        if (level.getBlockState(pos.above()).isCollisionShapeFullBlock(level, pos.above())) {
+            return InteractionResult.SUCCESS;
+        }
+
         player.getCapability(CapabilityRegistry.CHESHIRE_CHEST).ifPresent(cheshireInv -> {
             MenuProvider provider = new SimpleMenuProvider(
                     (windowId, playerInventory, p) -> new CheshireChestMenu(windowId, playerInventory, cheshireInv, pos, p, ContainerLevelAccess.create(level, pos)),
