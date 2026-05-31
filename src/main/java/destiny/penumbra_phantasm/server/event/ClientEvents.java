@@ -13,6 +13,7 @@ import destiny.penumbra_phantasm.client.render.GreatDoorRenderUtil;
 import destiny.penumbra_phantasm.client.render.screen.DarkWorldInventoryScreen;
 import destiny.penumbra_phantasm.client.render.screen.DarkWorldLanScreen;
 import destiny.penumbra_phantasm.client.render.screen.DarkWorldPauseScreen;
+import destiny.penumbra_phantasm.server.capability.SoulCapability;
 import destiny.penumbra_phantasm.server.fountain.GreatDoor;
 import destiny.penumbra_phantasm.server.util.DarkWorldUtil;
 import net.minecraft.Util;
@@ -80,7 +81,7 @@ import static org.lwjgl.opengl.GL32C.GL_DEPTH_CLAMP;
 public class ClientEvents {
 	private static final BufferBuilder FOUNTAIN_BUFFER = new BufferBuilder(65536);
 	private static final ResourceLocation DARK_WORLD_WIDGETS = new ResourceLocation(PenumbraPhantasm.MODID, "textures/gui/dark_world/widgets.png");
-	private static final ResourceLocation DARK_WORLD_ICONS = new ResourceLocation(PenumbraPhantasm.MODID, "textures/gui/dark_world/icons.png");
+	private static final ResourceLocation DARK_WORLD_ICONS = new ResourceLocation(PenumbraPhantasm.MODID, "textures/gui/dark_world/icons_1.png");
 	private static final ResourceLocation DARK_WORLD_HOTBAR = new ResourceLocation(PenumbraPhantasm.MODID, "textures/gui/dark_world/hotbar.png");
 	private static final ResourceLocation DARK_WORLD_HOTBAR_GLOW = new ResourceLocation(PenumbraPhantasm.MODID, "textures/gui/dark_world/hotbar_glow.png");
 
@@ -337,6 +338,7 @@ public class ClientEvents {
 		Minecraft mc = Minecraft.getInstance();
 		if (mc.level == null || mc.player == null) return;
 		if (!DarkWorldUtil.isDarkWorld(mc.level)) return;
+		Player player = mc.player;
 
 		NamedGuiOverlay overlay = event.getOverlay();
 		GuiGraphics gui = event.getGuiGraphics();
@@ -362,8 +364,11 @@ public class ClientEvents {
 			event.setCanceled(true);
 			renderDarkWorldCrosshair(gui, window, mc);
 		} else if (overlay == VanillaGuiOverlay.PLAYER_HEALTH.type()) {
+			SoulCapability soulCap = player.getCapability(CapabilityRegistry.SOUL).orElse(null);
+			int soulType = soulCap.soulType;
+
 			event.setCanceled(true);
-			renderDarkWorldHealth(mc, gui, window, mc.player);
+			renderDarkWorldHealth(mc, gui, window, mc.player, soulType);
 		} else if (overlay == VanillaGuiOverlay.HOTBAR.type()) {
 			event.setCanceled(true);
 			renderDarkWorldHotbar(mc, gui, window, mc.player);
@@ -510,11 +515,12 @@ public class ClientEvents {
 		}
 	}
 
-	private static void renderDarkWorldHealth(Minecraft mc, GuiGraphics gui, Window window, Player player) {
+	private static void renderDarkWorldHealth(Minecraft mc, GuiGraphics gui, Window window, Player player, int soulType) {
 		if (player == null) return;
 
 		if (!mc.gameMode.canHurtPlayer()) return;
 
+		ResourceLocation iconsTexture = new ResourceLocation(PenumbraPhantasm.MODID, "textures/gui/dark_world/icons_" + soulType + ".png");
 		int screenWidth = window.getGuiScaledWidth();
 		int screenHeight = window.getGuiScaledHeight();
 		int currentHealth = Mth.ceil(player.getHealth());
@@ -573,7 +579,7 @@ public class ClientEvents {
 		}
 		mc.getProfiler().popPush("health");
 
-		renderHearts(gui, player, leftX, healthY, rowHeight, regenerationOffset, maxHealth, currentHealth, displayHealthValue, absorption, blinking);
+		renderHearts(gui, player, leftX, healthY, rowHeight, regenerationOffset, maxHealth, currentHealth, displayHealthValue, absorption, blinking, iconsTexture);
 
 		LivingEntity mount = getPlayerVehicleWithHealth(mc, player);
 		int mountHearts = getVehicleMaxHearts(mount);
@@ -605,7 +611,6 @@ public class ClientEvents {
 			renderVehicleHealth(mc, gui, window, mount);
 		}
 
-		// Air bubbles
 		mc.getProfiler().push("air");
 		int maxAir = player.getMaxAirSupply();
 		int currentAir = Math.min(player.getAirSupply(), maxAir);
@@ -644,7 +649,7 @@ public class ClientEvents {
 
 	private static void renderHearts(GuiGraphics gui, Player player, int x, int y, int rowHeight,
 									 int regenerationOffset, float maxHealth, int currentHealth,
-									 int displayHealth, int absorption, boolean blink) {
+									 int displayHealth, int absorption, boolean blink, ResourceLocation iconsTexture) {
 		Gui.HeartType heartType = Gui.HeartType.forPlayer(player);
 		int hardcoreOffset = (player.level().getLevelData().isHardcore() ? 5 : 0) * 9;
 		int totalHearts = Mth.ceil(maxHealth / 2.0F);
@@ -663,7 +668,7 @@ public class ClientEvents {
 				heartY -= 2;
 			}
 
-			renderHeart(gui, Gui.HeartType.CONTAINER, heartX, heartY, hardcoreOffset, false, false);
+			renderHeart(gui, Gui.HeartType.CONTAINER, heartX, heartY, hardcoreOffset, false, false, iconsTexture);
 
 			int heartIndex = i * 2;
 			boolean isAbsorption = i >= totalHearts;
@@ -672,18 +677,18 @@ public class ClientEvents {
 				if (absorptionIndex < absorption) {
 					boolean half = absorptionIndex + 1 == absorption;
 					renderHeart(gui, heartType == Gui.HeartType.WITHERED ? heartType : Gui.HeartType.ABSORBING,
-							heartX, heartY, hardcoreOffset, false, half);
+							heartX, heartY, hardcoreOffset, false, half, iconsTexture);
 				}
 			}
 
 			if (blink && heartIndex < displayHealth) {
 				boolean half = heartIndex + 1 == displayHealth;
-				renderHeart(gui, heartType, heartX, heartY, hardcoreOffset, false, half);
+				renderHeart(gui, heartType, heartX, heartY, hardcoreOffset, false, half, iconsTexture);
 			}
 
 			if (heartIndex < currentHealth) {
 				boolean half = heartIndex + 1 == currentHealth;
-				renderHeart(gui, heartType, heartX, heartY, hardcoreOffset, false, half);
+				renderHeart(gui, heartType, heartX, heartY, hardcoreOffset, false, half, iconsTexture);
 			}
 		}
 
@@ -699,13 +704,13 @@ public class ClientEvents {
 				if (i < totalHearts && i == regenerationOffset) {
 					heartY -= 2;
 				}
-				renderHeart(gui, Gui.HeartType.CONTAINER, heartX, heartY, hardcoreOffset, true, false);
+				renderHeart(gui, Gui.HeartType.CONTAINER, heartX, heartY, hardcoreOffset, true, false, iconsTexture);
 			}
 		}
 	}
 
-	private static void renderHeart(GuiGraphics gui, Gui.HeartType type, int x, int y, int textureYOffset, boolean blink, boolean half) {
-		gui.blit(DARK_WORLD_ICONS, x, y, type.getX(half, blink), textureYOffset, 9, 9);
+	private static void renderHeart(GuiGraphics gui, Gui.HeartType type, int x, int y, int textureYOffset, boolean blink, boolean half, ResourceLocation iconsTexture) {
+		gui.blit(iconsTexture, x, y, type.getX(half, blink), textureYOffset, 9, 9);
 	}
 
 	private static void renderVehicleHealth(Minecraft mc, GuiGraphics gui, Window window, LivingEntity vehicle) {
