@@ -103,6 +103,9 @@ public class CommonEvents {
     @SubscribeEvent
     public void attackEntity(AttackEntityEvent event) {
         Level level = event.getEntity().level();
+
+        if (level.isClientSide()) return;
+
         Entity target = event.getTarget();
         Player player = event.getEntity();
         ItemStack stack = player.getMainHandItem();
