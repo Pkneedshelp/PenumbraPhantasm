@@ -42,6 +42,11 @@ public class PlayerAnimator {
                 new ResourceLocation(MODID, "injection_use_alt"),
                 1500,
                 PlayerAnimator::registerPlayerAnimation);
+
+        PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(
+                new ResourceLocation(MODID, "soul_rip"),
+                1500,
+                PlayerAnimator::registerPlayerAnimation);
     }
 
     //This method will set your mods animation into the library.
