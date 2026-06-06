@@ -100,7 +100,12 @@ public class HearthBlockEntity extends BlockEntity {
             ItemStack soul = new ItemStack(ItemRegistry.HEARTH_SOUL.get());
             soul.getOrCreateTag().put(HEARTH_POS, NbtUtils.writeBlockPos(pos));
             soul.getOrCreateTag().putInt(SOUL_TYPE, soulCap.soulType);
-            player.setItemInHand(InteractionHand.MAIN_HAND, soul);
+
+            if (player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty()) {
+                player.setItemInHand(InteractionHand.MAIN_HAND, soul);
+            } else {
+                player.addItem(soul);
+            }
 
             hearth.setChanged();
         }
