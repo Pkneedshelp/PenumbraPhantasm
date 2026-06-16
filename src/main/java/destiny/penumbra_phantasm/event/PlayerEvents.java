@@ -1,6 +1,5 @@
 package destiny.penumbra_phantasm.event;
 
-import destiny.penumbra_phantasm.capability.PlayerInventoryData;
 import destiny.penumbra_phantasm.capability.PlayerInventoryProvider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -24,7 +23,10 @@ public class PlayerEvents {
     @SubscribeEvent
     public void attachCapabilities(AttachCapabilitiesEvent<Object> event) {
         if (event.getObject() instanceof Player) {
-            event.addCapability(PlayerInventoryProvider.ID, new PlayerInventoryProvider());
+            event.addCapability(
+                    new ResourceLocation("penumbra_phantasm", "player_inventory"),
+                    new PlayerInventoryProvider()
+            );
         }
     }
 
@@ -48,9 +50,17 @@ public class PlayerEvents {
         if (level.isClientSide) return;
 
         player.getCapability(PlayerInventoryProvider.PLAYER_INVENTORY).ifPresent(data -> {
+
             String currentDim = level.dimension().location().toString();
             String lastDim = data.getLastDimension();
 
+            // ⭐ FIRST-TICK FIX — prevents overwriting your inventory on login
+            if (lastDim.isEmpty()) {
+                data.setLastDimension(currentDim);
+                return;
+            }
+
+            // No dimension change
             if (lastDim.equals(currentDim)) return;
 
             boolean enteringCard = currentDim.equals(CARD_KINGDOM);
@@ -66,10 +76,11 @@ public class PlayerEvents {
                 data.setOverworldInv(invNBT);
             }
 
-            // Load target inventory
+            // Load the correct inventory
             ListTag loadNBT = enteringCard ? data.getCardKingdomInv() : data.getOverworldInv();
             player.getInventory().load(loadNBT);
 
+            // Update last dimension
             data.setLastDimension(currentDim);
         });
     }
