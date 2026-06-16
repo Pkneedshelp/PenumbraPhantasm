@@ -2,11 +2,11 @@ package destiny.penumbra_phantasm.event;
 
 import destiny.penumbra_phantasm.capability.PlayerInventoryData;
 import destiny.penumbra_phantasm.capability.PlayerInventoryProvider;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -25,7 +25,7 @@ public class PlayerEvents {
     public void attachCapabilities(AttachCapabilitiesEvent<Object> event) {
         if (event.getObject() instanceof Player) {
             event.addCapability(
-                    new net.minecraft.resources.ResourceLocation("penumbra_phantasm", "player_inventory"),
+                    new ResourceLocation("penumbra_phantasm", "player_inventory"),
                     new PlayerInventoryProvider()
             );
         }
@@ -82,4 +82,5 @@ public class PlayerEvents {
         });
     }
 }
+
 
