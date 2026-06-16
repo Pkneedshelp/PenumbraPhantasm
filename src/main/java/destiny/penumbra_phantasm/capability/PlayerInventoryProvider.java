@@ -38,3 +38,4 @@ public class PlayerInventoryProvider implements ICapabilityProvider {
         backend.loadNBT(nbt);
     }
 }
+
