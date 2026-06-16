@@ -71,6 +71,8 @@ public class PenumbraPhantasm {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         MinecraftForge.EVENT_BUS.register(new CommonEvents());
+MinecraftForge.EVENT_BUS.register(destiny.penumbra_phantasm.event.PlayerEvents.class);
+
 
         SoundRegistry.SOUNDS.register(modEventBus);
         EntityRegistry.ENTITY_TYPES.register(modEventBus);
