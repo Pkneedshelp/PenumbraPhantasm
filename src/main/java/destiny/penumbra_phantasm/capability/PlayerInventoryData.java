@@ -1,27 +1,28 @@
 package destiny.penumbra_phantasm.capability;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 
 public class PlayerInventoryData {
 
-    private CompoundTag overworldInv = new CompoundTag();
-    private CompoundTag cardKingdomInv = new CompoundTag();
+    private ListTag overworldInv = new ListTag();
+    private ListTag cardKingdomInv = new ListTag();
     private String lastDimension = "";
 
-    public CompoundTag getOverworldInv() {
+    public ListTag getOverworldInv() {
         return overworldInv;
     }
 
-    public CompoundTag getCardKingdomInv() {
+    public void setOverworldInv(ListTag inv) {
+        this.overworldInv = inv;
+    }
+
+    public ListTag getCardKingdomInv() {
         return cardKingdomInv;
     }
 
-    public void setOverworldInv(CompoundTag tag) {
-        this.overworldInv = tag;
-    }
-
-    public void setCardKingdomInv(CompoundTag tag) {
-        this.cardKingdomInv = tag;
+    public void setCardKingdomInv(ListTag inv) {
+        this.cardKingdomInv = inv;
     }
 
     public String getLastDimension() {
@@ -32,21 +33,19 @@ public class PlayerInventoryData {
         this.lastDimension = dim;
     }
 
-    public void saveNBT(CompoundTag nbt) {
-        nbt.put("overworld_inventory", overworldInv);
-        nbt.put("card_kingdom_inventory", cardKingdomInv);
-        nbt.putString("last_dimension", lastDimension);
+    public void saveNBT(CompoundTag tag) {
+        tag.put("OverworldInv", overworldInv);
+        tag.put("CardKingdomInv", cardKingdomInv);
+        tag.putString("LastDimension", lastDimension);
     }
 
-    public void loadNBT(CompoundTag nbt) {
-        if (nbt.contains("overworld_inventory"))
-            overworldInv = nbt.getCompound("overworld_inventory");
-
-        if (nbt.contains("card_kingdom_inventory"))
-            cardKingdomInv = nbt.getCompound("card_kingdom_inventory");
-
-        if (nbt.contains("last_dimension"))
-            lastDimension = nbt.getString("last_dimension");
+    public void loadNBT(CompoundTag tag) {
+        if (tag.contains("OverworldInv")) {
+            overworldInv = tag.getList("OverworldInv", 10); // 10 = Compound
+        }
+        if (tag.contains("CardKingdomInv")) {
+            cardKingdomInv = tag.getList("CardKingdomInv", 10);
+        }
+        lastDimension = tag.getString("LastDimension");
     }
 }
-
