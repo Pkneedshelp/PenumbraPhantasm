@@ -6,7 +6,7 @@ import net.minecraft.nbt.ListTag;
 public class PlayerInventoryData {
 
     private ListTag overworldInv = new ListTag();
-    private ListTag cardKingdomInv = new ListTag();
+    private ListTag darkWorldInv = new ListTag();
     private String lastDimension = "";
 
     public ListTag getOverworldInv() {
@@ -17,12 +17,12 @@ public class PlayerInventoryData {
         this.overworldInv = inv;
     }
 
-    public ListTag getCardKingdomInv() {
-        return cardKingdomInv;
+    public ListTag getDarkWorldInv() {
+        return darkWorldInv;
     }
 
-    public void setCardKingdomInv(ListTag inv) {
-        this.cardKingdomInv = inv;
+    public void setDarkWorldInv(ListTag inv) {
+        this.darkWorldInv = inv;
     }
 
     public String getLastDimension() {
@@ -35,16 +35,16 @@ public class PlayerInventoryData {
 
     public void saveNBT(CompoundTag tag) {
         tag.put("OverworldInv", overworldInv);
-        tag.put("CardKingdomInv", cardKingdomInv);
+        tag.put("DarkWorldInv", darkWorldInv);
         tag.putString("LastDimension", lastDimension);
     }
 
     public void loadNBT(CompoundTag tag) {
         if (tag.contains("OverworldInv")) {
-            overworldInv = tag.getList("OverworldInv", 10); // 10 = Compound
+            overworldInv = tag.getList("OverworldInv", 10);
         }
-        if (tag.contains("CardKingdomInv")) {
-            cardKingdomInv = tag.getList("CardKingdomInv", 10);
+        if (tag.contains("DarkWorldInv")) {
+            darkWorldInv = tag.getList("DarkWorldInv", 10);
         }
         lastDimension = tag.getString("LastDimension");
     }
