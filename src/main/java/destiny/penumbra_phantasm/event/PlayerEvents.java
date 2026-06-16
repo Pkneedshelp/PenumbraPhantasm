@@ -3,6 +3,7 @@ package destiny.penumbra_phantasm.event;
 import destiny.penumbra_phantasm.capability.PlayerInventoryData;
 import destiny.penumbra_phantasm.capability.PlayerInventoryProvider;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -20,18 +21,13 @@ public class PlayerEvents {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    // Attach capability to players
     @SubscribeEvent
     public void attachCapabilities(AttachCapabilitiesEvent<Object> event) {
         if (event.getObject() instanceof Player) {
-            event.addCapability(
-                    new ResourceLocation("penumbra_phantasm", "player_inventory"),
-                    new PlayerInventoryProvider()
-            );
+            event.addCapability(PlayerInventoryProvider.ID, new PlayerInventoryProvider());
         }
     }
 
-    // Clone capability on respawn
     @SubscribeEvent
     public void onPlayerClone(PlayerEvent.Clone event) {
         event.getOriginal().getCapability(PlayerInventoryProvider.PLAYER_INVENTORY).ifPresent(oldStore -> {
@@ -43,7 +39,6 @@ public class PlayerEvents {
         });
     }
 
-    // Main tick logic for dimension-based inventory swapping
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END) return;
@@ -53,18 +48,16 @@ public class PlayerEvents {
         if (level.isClientSide) return;
 
         player.getCapability(PlayerInventoryProvider.PLAYER_INVENTORY).ifPresent(data -> {
-
             String currentDim = level.dimension().location().toString();
             String lastDim = data.getLastDimension();
 
-            // First tick or no change
             if (lastDim.equals(currentDim)) return;
 
             boolean enteringCard = currentDim.equals(CARD_KINGDOM);
             boolean leavingCard = lastDim.equals(CARD_KINGDOM);
 
-            // Save current inventory into correct slot
-            CompoundTag invNBT = new CompoundTag();
+            // Save current inventory as ListTag
+            ListTag invNBT = new ListTag();
             player.getInventory().save(invNBT);
 
             if (leavingCard) {
@@ -73,14 +66,11 @@ public class PlayerEvents {
                 data.setOverworldInv(invNBT);
             }
 
-            // Load the new inventory
-            CompoundTag loadNBT = enteringCard ? data.getCardKingdomInv() : data.getOverworldInv();
+            // Load target inventory
+            ListTag loadNBT = enteringCard ? data.getCardKingdomInv() : data.getOverworldInv();
             player.getInventory().load(loadNBT);
 
-            // Update last dimension
             data.setLastDimension(currentDim);
         });
     }
 }
-
-
