@@ -14,8 +14,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class PlayerEvents {
 
-    private static final String CARD_KINGDOM = "penumbra_phantasm:card_kingdom";
-
     public PlayerEvents() {
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -54,7 +52,7 @@ public class PlayerEvents {
             String currentDim = level.dimension().location().toString();
             String lastDim = data.getLastDimension();
 
-            // ⭐ FIRST-TICK FIX — prevents overwriting your inventory on login
+            // ⭐ First tick fix
             if (lastDim.isEmpty()) {
                 data.setLastDimension(currentDim);
                 return;
@@ -63,21 +61,22 @@ public class PlayerEvents {
             // No dimension change
             if (lastDim.equals(currentDim)) return;
 
-            boolean enteringCard = currentDim.equals(CARD_KINGDOM);
-            boolean leavingCard = lastDim.equals(CARD_KINGDOM);
+            // ⭐ Dynamic dimension detection
+            boolean enteringDark = currentDim.contains("dark_world_type_");
+            boolean leavingDark = lastDim.contains("dark_world_type_");
 
-            // Save current inventory as ListTag
+            // Save current inventory
             ListTag invNBT = new ListTag();
             player.getInventory().save(invNBT);
 
-            if (leavingCard) {
-                data.setCardKingdomInv(invNBT);
+            if (leavingDark) {
+                data.setDarkWorldInv(invNBT);
             } else {
                 data.setOverworldInv(invNBT);
             }
 
-            // Load the correct inventory
-            ListTag loadNBT = enteringCard ? data.getCardKingdomInv() : data.getOverworldInv();
+            // Load correct inventory
+            ListTag loadNBT = enteringDark ? data.getDarkWorldInv() : data.getOverworldInv();
             player.getInventory().load(loadNBT);
 
             // Update last dimension
@@ -85,3 +84,4 @@ public class PlayerEvents {
         });
     }
 }
+
